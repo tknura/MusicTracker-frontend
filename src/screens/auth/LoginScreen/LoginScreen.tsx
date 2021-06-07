@@ -6,7 +6,7 @@ import { LoginForm, LoginFormFields } from 'components/forms/LoginForm/LoginForm
 import { RouteContainer } from 'components/navigation/RouteContainer'
 import { useLogin } from 'components/providers/AuthProvider'
 import { AppLogo } from 'components/common/AppLogo/AppLogo'
-import { REGISTER_ROUTE } from 'constants/routeNames'
+import { APP_CONNECTION_ROUTE, REGISTER_ROUTE } from 'constants/routeNames'
 import * as AuthStyled from '../auth.styles'
 
 const LoginScreen = (): JSX.Element => {
@@ -17,9 +17,10 @@ const LoginScreen = (): JSX.Element => {
   const { mutate: loginMutate } = useLoginMutation({
     onSuccess: ({ user_id: userId }) => {
       login(userId)
+      history.push(APP_CONNECTION_ROUTE)
     },
     // eslint-disable-next-line no-console
-    onError: () => console.warn(t('screen.signIn.errors.generic'))
+    onError: () => console.warn(t('screens.signIn.errors.generic'))
   })
 
   const handleLoginSubmit = (values: LoginFormFields) => {
