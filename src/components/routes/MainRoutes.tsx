@@ -1,14 +1,22 @@
-import { AUTH_ROUTE } from 'constants/routeNames'
+import { LOGIN_ROUTE, CALLBACK_ROUTE, REGISTER_ROUTE } from 'constants/routeNames'
 import { Redirect, Route, Switch } from 'react-router-dom'
 
-import { AuthScreen } from 'screens/AuthScreen/AuthScreen'
+import { LoginScreen } from 'screens/auth/LoginScreen/LoginScreen'
+import { RegisterScreen } from 'screens/auth/RegisterScreen/RegisterScreen'
+import { CallbackScreen } from 'screens/CallbackScreen/CallbackScreen'
 
 const MainRoutes = (): JSX.Element => (
   <Switch>
-    <Route exact path={AUTH_ROUTE}>
-      <AuthScreen />
+    <Route exact path={LOGIN_ROUTE}>
+      <LoginScreen />
     </Route>
-    <Redirect exact path="*" to="/auth" />
+    <Route exact path={REGISTER_ROUTE}>
+      <RegisterScreen />
+    </Route>
+    <Route exact path={CALLBACK_ROUTE}>
+      <CallbackScreen />
+    </Route>
+    <Redirect exact path="*" to={LOGIN_ROUTE} />
   </Switch>
 )
 

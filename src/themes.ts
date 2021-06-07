@@ -12,15 +12,19 @@ declare module '@material-ui/core/styles/createPalette' {
 export const theme = createMuiTheme(
   {
     palette: {
+      type: 'dark',
       accents: {
         main: '#ffffff',
       },
       primary: {
-        main: '#6772e5',
+        main: '#D64550',
+      },
+      secondary: {
+        main: '#6FEDB7'
       },
       background: {
-        default: '#ffffff',
-        paper: '#ECECEC'
+        default: '#1C2826',
+        paper: '#1C2826'
       }
     },
   }

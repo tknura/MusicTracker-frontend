@@ -1,0 +1,6 @@
+// camelcase is disabled  due to backend responses are in snake case
+{
+  "rules": {
+    "camelcase": "off"
+  }
+}
