@@ -26,7 +26,7 @@ interface AuthorizeSpotifyValues {
 }
 
 interface AuthorizeSpotifyResponse {
-  accessToken: string
+  access_token: string
 }
 
 const postRegister = async (
@@ -40,7 +40,7 @@ const postRegister = async (
   registerData.append('password2', values.password2)
   registerData.append('regulamin', values.regulamin.toString())
 
-  const { data } = await instance.post('/public/register', registerData)
+  const { data } = await instance.post('/register.php', registerData)
   return data
 }
 
@@ -52,7 +52,7 @@ const postLogin = async (
   loginData.append('login', values.login)
   loginData.append('password', values.password)
 
-  const { data } = await instance.post('/zaloguj.php', loginData)
+  const { data } = await instance.post('/login.php', loginData)
   return data
 }
 

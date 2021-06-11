@@ -1,12 +1,12 @@
 import { useTranslation } from 'react-i18next'
 import { useHistory } from 'react-router'
+import { Box, Button, Center, Divider } from '@chakra-ui/react'
 
 import { useRegisterMutation } from 'api/auth'
-import { RegisterForm, RegisterFormFields } from 'components/forms/RegisterForm/RegisterForm'
+import { RegisterForm, RegisterFormFields } from 'components/forms/RegisterForm'
 import { RouteContainer } from 'components/navigation/RouteContainer'
 import { AppLogo } from 'components/common/AppLogo/AppLogo'
 import { LOGIN_ROUTE } from 'constants/routeNames'
-import * as AuthStyled from '../auth.styles'
 
 const RegisterScreen = (): JSX.Element => {
   const { t } = useTranslation()
@@ -20,7 +20,7 @@ const RegisterScreen = (): JSX.Element => {
     onError: () => console.warn(t('screen.signIn.errors.generic'))
   })
 
-  const handleLoginSubmit = (values: RegisterFormFields) => {
+  const handleRegisterSubmit = (values: RegisterFormFields) => {
     registerMutate({
       nick: values.username,
       email: values.email,
@@ -36,19 +36,21 @@ const RegisterScreen = (): JSX.Element => {
 
   return (
     <RouteContainer>
-      <AuthStyled.RootContainer>
-        <AuthStyled.FormContainer>
+      <Center w="100%">
+        <Box maxW="500px" p={5}>
           <AppLogo />
-          <RegisterForm onSubmit={handleLoginSubmit} />
-          <AuthStyled.Hr />
-          <AuthStyled.Button
-            color="secondary"
+          <RegisterForm onSubmit={handleRegisterSubmit} />
+          <Divider colorScheme="primary" mt={10} mb={10} />
+          <Button
+            variant="ghost"
+            colorScheme="secondary"
             onClick={handleRedirectToRegister}
+            w="100%"
           >
             {t('screens.login.noAccount')}
-          </AuthStyled.Button>
-        </AuthStyled.FormContainer>
-      </AuthStyled.RootContainer>
+          </Button>
+        </Box>
+      </Center>
     </RouteContainer>
   )
 }

@@ -5,6 +5,7 @@ export const en = {
       username: 'Username',
       email: 'E-mail',
       password: 'Password',
+      loginSpotify: 'Log in into Spotify',
       errors: {
         username: {
           required: 'Username is required',

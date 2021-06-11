@@ -1,13 +1,14 @@
 import { useTranslation } from 'react-i18next'
 import { useHistory } from 'react-router'
+import { Box, Button, Center, Divider } from '@chakra-ui/react'
+import { FaFacebook, FaTwitter } from 'react-icons/fa'
 
 import { useLoginMutation } from 'api/auth'
-import { LoginForm, LoginFormFields } from 'components/forms/LoginForm/LoginForm'
+import { LoginForm, LoginFormFields } from 'components/forms/LoginForm'
 import { RouteContainer } from 'components/navigation/RouteContainer'
 import { useLogin } from 'components/providers/AuthProvider'
 import { AppLogo } from 'components/common/AppLogo/AppLogo'
 import { APP_CONNECTION_ROUTE, REGISTER_ROUTE } from 'constants/routeNames'
-import * as AuthStyled from '../auth.styles'
 
 const LoginScreen = (): JSX.Element => {
   const { t } = useTranslation()
@@ -36,19 +37,37 @@ const LoginScreen = (): JSX.Element => {
 
   return (
     <RouteContainer>
-      <AuthStyled.RootContainer>
-        <AuthStyled.FormContainer>
+      <Center w="100%">
+        <Box maxW="500px" p={5}>
           <AppLogo />
           <LoginForm onSubmit={handleLoginSubmit} />
-          <AuthStyled.Hr />
-          <AuthStyled.Button
-            color="secondary"
+          <Divider colorScheme="primary" mt={10} mb={10} />
+          <Button
+            colorScheme="facebook"
+            leftIcon={<FaFacebook />}
+            w="100%"
+            mb={3}
+          >
+            Facebook
+          </Button>
+          <Button
+            colorScheme="twitter"
+            leftIcon={<FaTwitter />}
+            w="100%"
+            mb={3}
+          >
+            Twitter
+          </Button>
+          <Button
+            variant="ghost"
+            colorScheme="secondary"
             onClick={handleRedirectToRegister}
+            w="100%"
           >
             {t('screens.login.noAccount')}
-          </AuthStyled.Button>
-        </AuthStyled.FormContainer>
-      </AuthStyled.RootContainer>
+          </Button>
+        </Box>
+      </Center>
     </RouteContainer>
   )
 }

@@ -5,26 +5,37 @@ import { Id } from 'types/Id'
 
 interface SpotifyUserData {
   accessToken: string
-  refreshToken: string
+  refreshToken?: string
 }
 
 interface User {
   userId: Id
-  spotify?: SpotifyUserData
 }
 
 const useAuthorization = () => {
   const [user, setUser] = useState<User | null>(null)
+  const [spotifyData, setSpotifyData] = useState<SpotifyUserData | null>(null)
 
   const login = (userId: Id) => {
     setUser({
       userId,
     })
   }
-
   const logout = () => setUser(null)
 
-  return { login, logout, user }
+  const authSpotify = (accessToken: string) => {
+    setSpotifyData({
+      accessToken,
+    })
+  }
+
+  return {
+    login,
+    logout,
+    user,
+    authSpotify,
+    spotifyData
+  }
 }
 
 const [
@@ -33,12 +44,16 @@ const [
   useLogout,
   useUserLoggedIn,
   useUserId,
+  useAuthSpotify,
+  useSpotifyToken,
 ] = constate(
   useAuthorization,
   value => value.login,
   value => value.logout,
   value => !!value.user?.userId,
-  value => value.user?.userId
+  value => value.user?.userId,
+  value => value.authSpotify,
+  value => value.spotifyData?.accessToken
 )
 
 export {
@@ -47,4 +62,6 @@ export {
   useLogout,
   useUserLoggedIn,
   useUserId,
+  useAuthSpotify,
+  useSpotifyToken,
 }

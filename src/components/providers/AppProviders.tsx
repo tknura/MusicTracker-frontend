@@ -1,7 +1,6 @@
 import { ReactNode } from 'react'
 import { QueryClient, QueryClientProvider } from 'react-query'
-import { StylesProvider, ThemeProvider as MuiThemeProvider } from '@material-ui/core'
-import { ThemeProvider } from 'styled-components'
+import { ChakraProvider } from '@chakra-ui/react'
 
 import { FetchProvider } from 'components/providers/FetchProvider'
 import { AuthProvider } from 'components/providers/AuthProvider'
@@ -19,13 +18,9 @@ const AppProviders = (
   <QueryClientProvider client={queryClient}>
     <AuthProvider>
       <FetchProvider>
-        <StylesProvider injectFirst>
-          <MuiThemeProvider theme={theme}>
-            <ThemeProvider theme={theme}>
-              {children}
-            </ThemeProvider>
-          </MuiThemeProvider>
-        </StylesProvider>
+        <ChakraProvider theme={theme}>
+          {children}
+        </ChakraProvider>
       </FetchProvider>
     </AuthProvider>
   </QueryClientProvider>
