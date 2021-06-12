@@ -45,6 +45,12 @@ export const pl = {
           generic: 'Wystąpił nieznany błąd podczas rejestracji'
         },
       },
+      main: {
+        recentTracks: 'Ostatnie utwory',
+        ago: 'temu',
+        showMore: 'Pokaż więcej',
+        showLess: 'Pokaż mniej',
+      }
     },
   }
 }
