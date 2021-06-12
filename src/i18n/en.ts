@@ -50,6 +50,7 @@ export const en = {
         ago: 'ago',
         showMore: 'Show more',
         showLess: 'Show less',
+        empty: 'Nothing to show',
       }
     },
   },

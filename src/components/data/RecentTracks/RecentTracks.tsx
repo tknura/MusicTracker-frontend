@@ -25,22 +25,27 @@ const RecentTracks = (): JSX.Element => {
       <Text fontSize="6xl">
         {t('screens.main.recentTracks')}
       </Text>
-      {data?.items.slice(0, itemsToShow).map((row) => (
-        <RecentTrackArea
-          key={row.played_at}
-          artist={row.track.artists[0].name}
-          track={row.track.name}
-          id={row.track.id}
-          time={new Date(row.played_at)}
-        />
-      ))}
+      {data?.items.length !== 0 ? (
+        data?.items.slice(0, itemsToShow).map((row) => (
+          <RecentTrackArea
+            key={row.played_at}
+            artist={row.track.artists[0].name}
+            track={row.track.name}
+            id={row.track.id}
+            time={new Date(row.played_at)}
+          />
+        )))
+        : (
+          <Text fontSize="lg">
+            {t('screens.main.empty')}
+          </Text>
+        )}
       <Button variant="link" onClick={showMore}>
         {mode === Mode.LESS ? (
           t('screens.main.showMore')
-        )
-          : (
-            t('screens.main.showLess')
-          )}
+        ) : (
+          t('screens.main.showLess')
+        )}
       </Button>
     </Stack>
   )

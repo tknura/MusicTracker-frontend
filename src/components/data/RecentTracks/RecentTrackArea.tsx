@@ -3,7 +3,7 @@ import { formatDistance } from 'date-fns'
 import { pl } from 'date-fns/locale'
 import { useTranslation } from 'react-i18next'
 
-import { useTrack } from 'api/spotify/player'
+import { useTrack } from 'api/spotify/tracks'
 
 interface RecentTrackAreaProps {
   artist: string
@@ -20,6 +20,7 @@ const RecentTrackArea = ({
 }: RecentTrackAreaProps): JSX.Element => {
   const { data } = useTrack(id)
   const { t, i18n } = useTranslation()
+  const timeDistance = i18n.language === 'pl' ? formatDistance(new Date(), time, { locale: pl }) : formatDistance(new Date(), time)
 
   return (
     <Stack
@@ -30,19 +31,21 @@ const RecentTrackArea = ({
         boxSize="60px"
         src={data?.album.images[1].url}
         alt=""
-        mr={10}
+        mr={8}
       />
-      <Link fontSize="lg" href={data?.artists[0].external_urls.spotify}>
-        {artist}
-      </Link>
-      <Text fontSize="lg">
-        {' - '}
-      </Text>
-      <Link fontSize="lg" href={data?.external_urls.spotify}>
-        {track}
-      </Link>
-      <Text fontSize="lg" pos="absolute" right="5%">
-        {`${i18n.language === 'pl' ? formatDistance(new Date(), time, { locale: pl }) : formatDistance(new Date(), time)} ${t('screens.main.ago')}`}
+      <Stack direction="row" maxW="55%">
+        <Link fontSize="lg" href={data?.artists[0].external_urls.spotify}>
+          {artist}
+        </Link>
+        <Text fontSize="lg">
+          {' - '}
+        </Text>
+        <Link fontSize="lg" href={data?.external_urls.spotify}>
+          {track}
+        </Link>
+      </Stack>
+      <Text fontSize="lg" pos="absolute" right="5%" maxW="20%">
+        {`${timeDistance} ${t('screens.main.ago')}`}
       </Text>
     </Stack>
   )
