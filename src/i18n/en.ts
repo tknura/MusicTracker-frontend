@@ -51,6 +51,9 @@ export const en = {
         showMore: 'Show more',
         showLess: 'Show less',
         empty: 'Nothing to show',
+        topArtists: 'Top artists',
+        topTracks: 'Top tracks',
+        topGenres: 'Top genres',
       }
     },
   },

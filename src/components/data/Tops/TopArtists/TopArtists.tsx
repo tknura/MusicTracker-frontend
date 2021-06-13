@@ -2,13 +2,13 @@ import { Stack, StackDivider, Text, Button } from '@chakra-ui/react'
 import { useTranslation } from 'react-i18next'
 import { useState } from 'react'
 
-import { useRecentlyPlayedTracks } from 'api/spotify/player'
-import { RecentTrackArea } from 'components/data/RecentTracks/RecentTrackArea'
+import { useTopArtistsMedTerm } from 'api/spotify/personalization'
+import { TopArtistArea } from './TopArtistArea'
 
 enum Mode { MORE, LESS }
 
-const RecentTracks = (): JSX.Element => {
-  const { data } = useRecentlyPlayedTracks()
+const TopArtists = (): JSX.Element => {
+  const { data } = useTopArtistsMedTerm()
   const { t } = useTranslation()
   const [itemsToShow, setItemsToShow] = useState(8)
   const [mode, setMode] = useState<Mode>(Mode.LESS)
@@ -20,19 +20,19 @@ const RecentTracks = (): JSX.Element => {
   return (
     <Stack
       divider={<StackDivider borderColor="gray.700" />}
-      marginTop={50}
+      minW={500}
+      paddingTop={35}
     >
-      <Text fontSize="6xl">
-        {t('screens.main.recentTracks')}
+      <Text fontSize="4xl">
+        {t('screens.main.topArtists')}
       </Text>
       {data?.items.length !== 0 ? (
         data?.items.slice(0, itemsToShow).map((row) => (
-          <RecentTrackArea
-            key={row.played_at}
-            artist={row.track.artists[0].name}
-            track={row.track.name}
-            id={row.track.id}
-            time={new Date(row.played_at)}
+          <TopArtistArea
+            key={row.uri}
+            name={row.name}
+            photo={row.images[0]?.url}
+            url={row.external_urls.spotify}
           />
         )))
         : (
@@ -51,4 +51,4 @@ const RecentTracks = (): JSX.Element => {
   )
 }
 
-export { RecentTracks }
+export { TopArtists }
