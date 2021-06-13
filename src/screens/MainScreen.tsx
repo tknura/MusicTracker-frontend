@@ -1,14 +1,11 @@
-import { useRecentlyPlayedTracks } from 'api/spotify/player'
+import { RecentTracks } from 'components/data/RecentTracks/RecentTracks'
+import { TopsSet } from 'components/data/Tops/TopsSet'
 
-const MainScreen = (): JSX.Element => {
-  const { data } = useRecentlyPlayedTracks()
-
-  return (
-    <div>
-      MainScreen
-      {JSON.stringify(data)}
-    </div>
-  )
-}
+const MainScreen = (): JSX.Element => (
+  <div>
+    <RecentTracks />
+    <TopsSet />
+  </div>
+)
 
 export { MainScreen }

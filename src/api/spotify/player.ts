@@ -2,13 +2,14 @@ import { useSpotifyApi } from 'components/providers/FetchProvider'
 import { useQuery, UseQueryResult } from 'react-query'
 import SpotifyWebApi from 'spotify-web-api-node'
 
-const getRecentlyPlayed = async (api: SpotifyWebApi): Promise<unknown> => {
+const getRecentlyPlayed = async (api: SpotifyWebApi)
+: Promise<SpotifyApi.UsersRecentlyPlayedTracksResponse> => {
   const { body } = await api.getMyRecentlyPlayedTracks()
   return body
 }
 
 const useRecentlyPlayedTracks = ()
-: UseQueryResult<unknown, unknown> => {
+: UseQueryResult<SpotifyApi.UsersRecentlyPlayedTracksResponse, unknown> => {
   const spotifyApi = useSpotifyApi()
   return useQuery('books', () => getRecentlyPlayed(spotifyApi))
 }

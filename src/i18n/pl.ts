@@ -45,6 +45,16 @@ export const pl = {
           generic: 'Wystąpił nieznany błąd podczas rejestracji'
         },
       },
+      main: {
+        recentTracks: 'Ostatnie utwory',
+        ago: 'temu',
+        showMore: 'Pokaż więcej',
+        showLess: 'Pokaż mniej',
+        empty: 'Wygląda na to że nic tu nie ma',
+        topArtists: 'Najpopularniejsi wykonawcy',
+        topTracks: 'Najpopularniejsze utwory',
+        topGenres: 'Najpopularniejsze gatunki',
+      },
     },
   }
 }

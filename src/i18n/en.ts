@@ -45,6 +45,16 @@ export const en = {
           generic: 'An undefined error occurred during registration, try again later.'
         },
       },
+      main: {
+        recentTracks: 'Recent tracks',
+        ago: 'ago',
+        showMore: 'Show more',
+        showLess: 'Show less',
+        empty: 'Nothing to show',
+        topArtists: 'Top artists',
+        topTracks: 'Top tracks',
+        topGenres: 'Top genres',
+      }
     },
   },
 }

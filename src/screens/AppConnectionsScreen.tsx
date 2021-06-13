@@ -12,7 +12,7 @@ const AppConnectionsScreen = (): JSX.Element => {
 
   const spotifyApiUrlGen = new SpotifyWebApi({
     clientId: process.env.REACT_APP_SPOTIFY_CLIENT_ID,
-    redirectUri: `${(new URL(window.location.href)).origin}${CALLBACK_ROUTE}/`,
+    redirectUri: `${(new URL(window.location.href)).origin}${CALLBACK_ROUTE}`,
   })
 
   const authorizeUrl = spotifyApiUrlGen?.createAuthorizeURL(scopes, '')
