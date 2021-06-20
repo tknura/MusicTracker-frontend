@@ -1,8 +1,16 @@
-import { useMutation, UseMutationOptions, UseMutationResult } from 'react-query'
+import {
+  useMutation,
+  UseMutationOptions,
+  UseMutationResult,
+  useQuery,
+  UseQueryOptions,
+  UseQueryResult
+} from 'react-query'
 import { AxiosInstance } from 'axios'
 
 import { useFetch } from 'components/providers/FetchProvider'
-import { Id } from 'types/Id'
+
+type ApiType = 'Spotify'
 
 interface RegisterValues {
   nick: string
@@ -18,15 +26,22 @@ interface LoginValues {
 }
 
 interface LoginResponse {
-  user_id: Id
+  user_id: number
 }
 
 interface AuthorizeSpotifyValues {
   code: string
+  userId: number
+  redirectUri: string
 }
 
 interface AuthorizeSpotifyResponse {
   access_token: string
+}
+
+interface GetTokensValues {
+  userId: number
+  apiType: ApiType
 }
 
 const postRegister = async (
@@ -38,7 +53,7 @@ const postRegister = async (
   registerData.append('email', values.email)
   registerData.append('password1', values.password1)
   registerData.append('password2', values.password2)
-  registerData.append('regulamin', values.regulamin.toString())
+  registerData.append('consent', values.regulamin.toString())
 
   const { data } = await instance.post('/register.php', registerData)
   return data
@@ -61,10 +76,10 @@ const postAuthorize = async (
   values: AuthorizeSpotifyValues
 ): Promise<AuthorizeSpotifyResponse> => {
   const authorizeData = new URLSearchParams()
-  authorizeData.append('user', '5')
+  authorizeData.append('user', values.userId.toString())
   authorizeData.append('type', 'Spotify')
   authorizeData.append('code', values.code)
-  authorizeData.append('redirect_uri', 'http://localhost:3000/callback')
+  authorizeData.append('redirect_uri', values.redirectUri)
 
   const config = {
     headers: {
@@ -73,6 +88,36 @@ const postAuthorize = async (
   }
 
   const { data } = await instance.post('/callback/authorize.php', authorizeData, config)
+  return data
+}
+
+const getAccessToken = async (instance: AxiosInstance, values: GetTokensValues)
+: Promise<AuthorizeSpotifyResponse> => {
+  const { data } = await instance.get(
+    '/gettokens.php',
+    { params:
+      {
+        user: values.userId,
+        type: values.apiType
+      }
+    }
+  )
+  return data
+}
+
+const getNewAccessToken = async (instance: AxiosInstance, values: GetTokensValues)
+: Promise<AuthorizeSpotifyResponse> => {
+  const authorizeData = new URLSearchParams()
+  authorizeData.append('user', values.userId.toString())
+  authorizeData.append('type', values.apiType)
+
+  const config = {
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    }
+  }
+
+  const { data } = await instance.post('/refresh.php', authorizeData, config)
   return data
 }
 
@@ -98,8 +143,28 @@ const useAuthorizeSpotifyMutation = (
   )
 }
 
+const useGetTokensQuery = (
+  values: GetTokensValues, options?: UseQueryOptions<AuthorizeSpotifyResponse>
+): UseQueryResult<AuthorizeSpotifyResponse> => {
+  const { fetch } = useFetch()
+  return useQuery('accessToken', () => getAccessToken(fetch, values), options)
+}
+
+const useRefreshTokensMutation = (
+  options: UseMutationOptions<AuthorizeSpotifyResponse, Error, GetTokensValues>
+): UseMutationResult<AuthorizeSpotifyResponse, Error, GetTokensValues> => {
+  const { fetch } = useFetch()
+  return useMutation(
+    'refreshToken',
+    (values: GetTokensValues) => getNewAccessToken(fetch, values),
+    options
+  )
+}
+
 export {
   useLoginMutation,
   useRegisterMutation,
-  useAuthorizeSpotifyMutation
+  useAuthorizeSpotifyMutation,
+  useGetTokensQuery,
+  useRefreshTokensMutation,
 }

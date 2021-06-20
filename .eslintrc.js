@@ -37,7 +37,7 @@ module.exports = {
     'import/no-extraneous-dependencies': 'off',
     'implicit-arrow-linebreak': 'off',
     'no-unused-vars': 'off',
-    '@typescript-eslint/no-unused-vars': ['error'],
+    '@typescript-eslint/no-unused-vars': ['warn'],
     'no-console': 'warn',
     'no-nested-ternary': 'off',
     'no-param-reassign': 'off',

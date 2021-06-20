@@ -1,10 +1,15 @@
+import { Box } from '@chakra-ui/react'
 import { RecentTracks } from 'components/data/RecentTracks/RecentTracks'
 import { TopsSet } from 'components/data/Tops/TopsSet'
+import { NavBar } from 'components/navigation/NavBar'
 
 const MainScreen = (): JSX.Element => (
   <div>
-    <RecentTracks />
-    <TopsSet />
+    <NavBar />
+    <Box>
+      <RecentTracks />
+      <TopsSet />
+    </Box>
   </div>
 )
 
