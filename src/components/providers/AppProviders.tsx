@@ -4,6 +4,7 @@ import { ChakraProvider } from '@chakra-ui/react'
 
 import { FetchProvider } from 'components/providers/FetchProvider'
 import { AuthProvider } from 'components/providers/AuthProvider'
+import { SpotifyApiProvider } from 'components/providers/SpotifyApiProvider'
 import { theme } from 'themes'
 
 interface AppProvidersProps {
@@ -18,9 +19,11 @@ const AppProviders = (
   <QueryClientProvider client={queryClient}>
     <AuthProvider>
       <FetchProvider>
-        <ChakraProvider theme={theme}>
-          {children}
-        </ChakraProvider>
+        <SpotifyApiProvider>
+          <ChakraProvider theme={theme}>
+            {children}
+          </ChakraProvider>
+        </SpotifyApiProvider>
       </FetchProvider>
     </AuthProvider>
   </QueryClientProvider>

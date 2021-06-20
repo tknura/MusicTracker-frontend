@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import constate from 'constate'
-
-import { Id } from 'types/Id'
+import { USER_ID } from 'constants/localStorageKeys'
 
 interface SpotifyUserData {
   accessToken: string
@@ -9,19 +8,25 @@ interface SpotifyUserData {
 }
 
 interface User {
-  userId: Id
+  userId: number
 }
 
 const useAuthorization = () => {
-  const [user, setUser] = useState<User | null>(null)
+  const [user, setUser] = useState<User | null>({
+    userId: parseInt(localStorage.getItem(USER_ID) || '', 10)
+  })
   const [spotifyData, setSpotifyData] = useState<SpotifyUserData | null>(null)
 
-  const login = (userId: Id) => {
+  const login = (userId: number) => {
     setUser({
       userId,
     })
+    localStorage.setItem(USER_ID, userId.toString())
   }
-  const logout = () => setUser(null)
+  const logout = () => {
+    setUser(null)
+    localStorage.setItem(USER_ID, '')
+  }
 
   const authSpotify = (accessToken: string) => {
     setSpotifyData({
