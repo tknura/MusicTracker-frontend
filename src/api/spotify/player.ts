@@ -1,4 +1,4 @@
-import { useSpotifyApi } from 'components/providers/FetchProvider'
+import { useSpotifyApi } from 'components/providers/SpotifyApiProvider'
 import { useQuery, UseQueryResult } from 'react-query'
 import SpotifyWebApi from 'spotify-web-api-node'
 

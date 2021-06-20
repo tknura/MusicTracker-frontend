@@ -1,11 +1,11 @@
-import { useSpotifyApi } from 'components/providers/FetchProvider'
+import { useSpotifyApi } from 'components/providers/SpotifyApiProvider'
 import { useQuery, UseQueryResult } from 'react-query'
 import SpotifyWebApi from 'spotify-web-api-node'
 
 const getTopArtistsMedTerm = async (api: SpotifyWebApi)
 : Promise<SpotifyApi.UsersTopArtistsResponse> => {
-  const { body } = await api.getMyTopArtists()
-  return body
+  const response = await api.getMyTopArtists()
+  return response.body
 }
 
 const useTopArtistsMedTerm = ()
@@ -16,8 +16,8 @@ const useTopArtistsMedTerm = ()
 
 const getTopTracksMedTerm = async (api: SpotifyWebApi)
 : Promise<SpotifyApi.UsersTopTracksResponse> => {
-  const { body } = await api.getMyTopTracks()
-  return body
+  const response = await api.getMyTopTracks()
+  return response.body
 }
 
 const useTopTracksMedTerm = ()
