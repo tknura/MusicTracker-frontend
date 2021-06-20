@@ -1,15 +1,18 @@
-import { Stack, StackDivider, Text, Button } from '@chakra-ui/react'
+import { Stack, StackDivider, Text, Button, Select } from '@chakra-ui/react'
 import { useTranslation } from 'react-i18next'
 import { useState } from 'react'
 import countBy from 'lodash/countBy'
 
-import { useTopArtistsMedTerm } from 'api/spotify/personalization'
+import { useTopArtistsLongTerm, useTopArtistsMediumTerm, useTopArtistsShortTerm } from 'api/spotify/personalization'
 import { TopGenreArea } from './TopGenreArea'
 
 enum Mode { MORE, LESS }
 
 const TopGenres = (): JSX.Element => {
-  const { data } = useTopArtistsMedTerm()
+  const { data: longTermData } = useTopArtistsLongTerm()
+  const { data: mediumTermData } = useTopArtistsMediumTerm()
+  const { data: shortTermData } = useTopArtistsShortTerm()
+  const [data, setData] = useState(shortTermData)
   const { t } = useTranslation()
   const [itemsToShow, setItemsToShow] = useState(15)
   const [mode, setMode] = useState<Mode>(Mode.LESS)
@@ -17,6 +20,15 @@ const TopGenres = (): JSX.Element => {
   const genreArray = Object.entries(
     countBy(data?.items.flatMap(artist => artist.genres))
   ).sort((a, b) => b[1] - a[1])
+
+  const handleChange = (e :React.ChangeEvent<HTMLSelectElement>) => {
+    switch (e.target.value) {
+      case 's': setData(shortTermData); break
+      case 'm': setData(mediumTermData); break
+      case 'l': setData(longTermData); break
+      default: break
+    }
+  }
 
   const showMore = () => {
     mode === Mode.LESS ? setItemsToShow(30) : setItemsToShow(15)
@@ -26,12 +38,19 @@ const TopGenres = (): JSX.Element => {
   return (
     <Stack
       divider={<StackDivider borderColor="gray.700" />}
-      minW={500}
+      w={500}
       paddingTop={35}
     >
-      <Text fontSize="4xl">
-        {t('screens.main.topGenres')}
-      </Text>
+      <Stack direction="row" justifyContent="space-between">
+        <Text fontSize="4xl" maxW="60%">
+          {t('screens.main.topGenres')}
+        </Text>
+        <Select size="lg" variant="flushed" maxW="30%" top="30%" placeholder={t('screens.main.chooseTime')} onChange={handleChange}>
+          <option value="s">{t('screens.main.fourWeeks')}</option>
+          <option value="m">{t('screens.main.sixMonths')}</option>
+          <option value="l">{t('screens.main.allTime')}</option>
+        </Select>
+      </Stack>
       {genreArray?.length !== 0 ? (
         genreArray?.slice(0, itemsToShow).map((row) => (
           <TopGenreArea

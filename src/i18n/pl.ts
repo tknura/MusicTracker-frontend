@@ -56,6 +56,11 @@ export const pl = {
         topArtists: 'Najpopularniejsi wykonawcy',
         topTracks: 'Najpopularniejsze utwory',
         topGenres: 'Najpopularniejsze gatunki',
+        chooseTime: 'Wybierz przedział czasowy',
+        allTime: 'Cały czas',
+        sixMonths: '6 miesięcy',
+        fourWeeks: '4 tygodnie',
+        playingNow: 'grany teraz'
       },
     },
   }
