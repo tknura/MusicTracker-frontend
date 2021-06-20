@@ -1,6 +1,6 @@
 import { Stack, StackDivider, Text, Button, Select } from '@chakra-ui/react'
 import { useTranslation } from 'react-i18next'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { useTopArtistsLongTerm, useTopArtistsMediumTerm, useTopArtistsShortTerm } from 'api/spotify/personalization'
 import { TopArtistArea } from './TopArtistArea'
@@ -25,6 +25,10 @@ const TopArtists = (): JSX.Element => {
     }
   }
 
+  useEffect(() => (
+    setData(shortTermData)
+  ), [shortTermData])
+
   const showMore = () => {
     mode === Mode.LESS ? setItemsToShow(20) : setItemsToShow(8)
     mode === Mode.LESS ? setMode(Mode.MORE) : setMode(Mode.LESS)
@@ -39,7 +43,7 @@ const TopArtists = (): JSX.Element => {
         <Text fontSize="4xl" maxW="80%">
           {t('screens.main.topArtists')}
         </Text>
-        <Select size="lg" variant="flushed" maxW="30%" top="30%" placeholder={t('screens.main.chooseTime')} onChange={handleChange}>
+        <Select size="lg" variant="flushed" maxW="30%" top="30%" defaultValue="s" placeholder={t('screens.main.chooseTime')} onChange={handleChange}>
           <option value="s">{t('screens.main.fourWeeks')}</option>
           <option value="m">{t('screens.main.sixMonths')}</option>
           <option value="l">{t('screens.main.allTime')}</option>
