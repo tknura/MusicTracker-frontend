@@ -54,6 +54,11 @@ export const en = {
         topArtists: 'Top artists',
         topTracks: 'Top tracks',
         topGenres: 'Top genres',
+        chooseTime: 'Choose time range',
+        allTime: 'All time',
+        sixMonths: '6 months',
+        fourWeeks: '4 weeks',
+        playingNow: 'playing now'
       }
     },
   },

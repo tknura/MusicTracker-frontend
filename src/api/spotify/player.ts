@@ -14,4 +14,16 @@ const useRecentlyPlayedTracks = ()
   return useQuery('books', () => getRecentlyPlayed(spotifyApi))
 }
 
-export { useRecentlyPlayedTracks }
+const getCurrentlyPlaying = async (api: SpotifyWebApi)
+: Promise<SpotifyApi.CurrentlyPlayingResponse> => {
+  const { body } = await api.getMyCurrentPlayingTrack()
+  return body
+}
+
+const useCurrentlyPlaying = ()
+: UseQueryResult<SpotifyApi.CurrentlyPlayingResponse, unknown> => {
+  const spotifyApi = useSpotifyApi()
+  return useQuery('current', () => getCurrentlyPlaying(spotifyApi))
+}
+
+export { useRecentlyPlayedTracks, useCurrentlyPlaying }

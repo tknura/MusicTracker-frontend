@@ -1,17 +1,29 @@
-import { Stack, StackDivider, Text, Button } from '@chakra-ui/react'
+import { Stack, StackDivider, Text, Button, Select } from '@chakra-ui/react'
 import { useTranslation } from 'react-i18next'
 import { useState } from 'react'
 
-import { useTopArtistsMedTerm } from 'api/spotify/personalization'
+import { useTopArtistsLongTerm, useTopArtistsMediumTerm, useTopArtistsShortTerm } from 'api/spotify/personalization'
 import { TopArtistArea } from './TopArtistArea'
 
 enum Mode { MORE, LESS }
 
 const TopArtists = (): JSX.Element => {
-  const { data } = useTopArtistsMedTerm()
+  const { data: longTermData } = useTopArtistsLongTerm()
+  const { data: mediumTermData } = useTopArtistsMediumTerm()
+  const { data: shortTermData } = useTopArtistsShortTerm()
+  const [data, setData] = useState(shortTermData)
   const { t } = useTranslation()
   const [itemsToShow, setItemsToShow] = useState(8)
   const [mode, setMode] = useState<Mode>(Mode.LESS)
+
+  const handleChange = (e :React.ChangeEvent<HTMLSelectElement>) => {
+    switch (e.target.value) {
+      case 's': setData(shortTermData); break
+      case 'm': setData(mediumTermData); break
+      case 'l': setData(longTermData); break
+      default: break
+    }
+  }
 
   const showMore = () => {
     mode === Mode.LESS ? setItemsToShow(20) : setItemsToShow(8)
@@ -20,12 +32,19 @@ const TopArtists = (): JSX.Element => {
   return (
     <Stack
       divider={<StackDivider borderColor="gray.700" />}
-      minW={500}
+      w={500}
       paddingTop={35}
     >
-      <Text fontSize="4xl">
-        {t('screens.main.topArtists')}
-      </Text>
+      <Stack direction="row" justifyContent="space-between">
+        <Text fontSize="4xl" maxW="80%">
+          {t('screens.main.topArtists')}
+        </Text>
+        <Select size="lg" variant="flushed" maxW="30%" top="30%" placeholder={t('screens.main.chooseTime')} onChange={handleChange}>
+          <option value="s">{t('screens.main.fourWeeks')}</option>
+          <option value="m">{t('screens.main.sixMonths')}</option>
+          <option value="l">{t('screens.main.allTime')}</option>
+        </Select>
+      </Stack>
       {data?.items.length !== 0 ? (
         data?.items.slice(0, itemsToShow).map((row) => (
           <TopArtistArea
