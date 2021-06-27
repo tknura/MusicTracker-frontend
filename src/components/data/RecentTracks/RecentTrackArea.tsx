@@ -1,5 +1,7 @@
 import { Stack, Image, Link, Text } from '@chakra-ui/react'
+// eslint-disable-next-line import/no-duplicates
 import { formatDistance } from 'date-fns'
+// eslint-disable-next-line import/no-duplicates
 import { pl } from 'date-fns/locale'
 import { useTranslation } from 'react-i18next'
 
