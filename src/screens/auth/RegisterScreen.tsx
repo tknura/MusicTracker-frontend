@@ -26,7 +26,7 @@ const RegisterScreen = (): JSX.Element => {
       email: values.email,
       password1: values.password,
       password2: values.repeatPassword,
-      regulamin: true,
+      consent: true,
     })
   }
 

@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next'
 import { useHistory } from 'react-router'
 import { Box, Button, Center, Divider } from '@chakra-ui/react'
 import { FaFacebook, FaTwitter } from 'react-icons/fa'
+import FacebookLogin, { ReactFacebookFailureResponse, ReactFacebookLoginInfo } from 'react-facebook-login'
 
 import { useLoginMutation, useRefreshTokensMutation } from 'api/auth'
 import { LoginForm, LoginFormFields } from 'components/forms/LoginForm'
@@ -43,6 +44,10 @@ const LoginScreen = (): JSX.Element => {
     history.push(REGISTER_ROUTE)
   }
 
+  const responseFacebook = (response: ReactFacebookLoginInfo | ReactFacebookFailureResponse) => {
+    console.log(response)
+  }
+
   return (
     <RouteContainer>
       <Center w="100%">
@@ -50,19 +55,21 @@ const LoginScreen = (): JSX.Element => {
           <AppLogo />
           <LoginForm onSubmit={handleLoginSubmit} />
           <Divider colorScheme="primary" mt={10} mb={10} />
-          <Button
-            colorScheme="facebook"
-            leftIcon={<FaFacebook />}
-            w="100%"
-            mb={3}
-          >
-            Facebook
-          </Button>
+          {process.env.REACT_APP_FACEBOOK_APP_ID && (
+            <FacebookLogin
+              appId={process.env.REACT_APP_FACEBOOK_APP_ID || ''}
+              autoLoad
+              fields="name,email,picture"
+              onClick={() => null}
+              callback={responseFacebook}
+              cssClass="chakra-button css-1n319a9"
+            />
+          )}
           <Button
             colorScheme="twitter"
             leftIcon={<FaTwitter />}
             w="100%"
-            mb={3}
+            my={3}
           >
             Twitter
           </Button>
