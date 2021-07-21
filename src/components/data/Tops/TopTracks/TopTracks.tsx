@@ -1,17 +1,33 @@
-import { Stack, StackDivider, Text, Button } from '@chakra-ui/react'
+import { Stack, StackDivider, Text, Button, Select } from '@chakra-ui/react'
 import { useTranslation } from 'react-i18next'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
-import { useTopTracksMedTerm } from 'api/spotify/personalization'
+import { useTopTracksLongTerm, useTopTracksMediumTerm, useTopTracksShortTerm } from 'api/spotify/personalization'
 import { TopTrackArea } from './TopTrackArea'
 
 enum Mode { MORE, LESS }
 
 const TopTracks = (): JSX.Element => {
-  const { data } = useTopTracksMedTerm()
+  const { data: longTermData } = useTopTracksLongTerm()
+  const { data: mediumTermData } = useTopTracksMediumTerm()
+  const { data: shortTermData } = useTopTracksShortTerm()
+  const [data, setData] = useState(shortTermData)
   const { t } = useTranslation()
   const [itemsToShow, setItemsToShow] = useState(8)
   const [mode, setMode] = useState<Mode>(Mode.LESS)
+
+  const handleChange = (e :React.ChangeEvent<HTMLSelectElement>) => {
+    switch (e.target.value) {
+      case 's': setData(shortTermData); break
+      case 'm': setData(mediumTermData); break
+      case 'l': setData(longTermData); break
+      default: break
+    }
+  }
+
+  useEffect(() => (
+    setData(shortTermData)
+  ), [shortTermData])
 
   const showMore = () => {
     mode === Mode.LESS ? setItemsToShow(20) : setItemsToShow(8)
@@ -20,12 +36,19 @@ const TopTracks = (): JSX.Element => {
   return (
     <Stack
       divider={<StackDivider borderColor="gray.700" />}
-      minW={500}
+      w={500}
       paddingTop={35}
     >
-      <Text fontSize="4xl">
-        {t('screens.main.topTracks')}
-      </Text>
+      <Stack direction="row" justifyContent="space-between">
+        <Text fontSize="4xl" maxW="60%">
+          {t('screens.main.topTracks')}
+        </Text>
+        <Select size="lg" variant="flushed" maxW="30%" top="30%" defaultValue="s" placeholder={t('screens.main.chooseTime')} onChange={handleChange}>
+          <option value="s">{t('screens.main.fourWeeks')}</option>
+          <option value="m">{t('screens.main.sixMonths')}</option>
+          <option value="l">{t('screens.main.allTime')}</option>
+        </Select>
+      </Stack>
       {data?.items.length !== 0 ? (
         data?.items.slice(0, itemsToShow).map((row) => (
           <TopTrackArea
