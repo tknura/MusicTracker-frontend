@@ -2,7 +2,9 @@ import { Stack, StackDivider, Text, Button, Select } from '@chakra-ui/react'
 import { useTranslation } from 'react-i18next'
 import { useEffect, useState } from 'react'
 
-import { useTopTracksLongTerm, useTopTracksMediumTerm, useTopTracksShortTerm } from 'api/spotify/personalization'
+import { useTopTracksLongTerm } from 'api/hooks/spotify/personalization/useTopTracksLongTerm'
+import { useTopTracksMediumTerm } from 'api/hooks/spotify/personalization/useTopTracksMediumTerm'
+import { useTopTracksShortTerm } from 'api/hooks/spotify/personalization/useTopTracksShortTerm'
 import { TopTrackArea } from './TopTrackArea'
 
 enum Mode { MORE, LESS }
