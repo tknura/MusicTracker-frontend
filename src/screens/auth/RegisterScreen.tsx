@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next'
 import { useHistory } from 'react-router'
 import { Box, Button, Center, Divider } from '@chakra-ui/react'
 
-import { useRegisterMutation } from 'api/auth'
+import { useRegisterMutation } from 'api/hooks/auth/useRegisterMutation'
 import { RegisterForm, RegisterFormFields } from 'components/forms/RegisterForm'
 import { RouteContainer } from 'components/navigation/RouteContainer'
 import { AppLogo } from 'components/common/AppLogo/AppLogo'

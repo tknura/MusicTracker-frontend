@@ -3,7 +3,9 @@ import { useTranslation } from 'react-i18next'
 import { useEffect, useState } from 'react'
 import countBy from 'lodash/countBy'
 
-import { useTopArtistsLongTerm, useTopArtistsMediumTerm, useTopArtistsShortTerm } from 'api/spotify/personalization'
+import { useTopArtistsLongTerm } from 'api/hooks/spotify/personalization/useTopArtistsLongTerm'
+import { useTopArtistsMediumTerm } from 'api/hooks/spotify/personalization/useTopArtistsMediumTerm'
+import { useTopArtistsShortTerm } from 'api/hooks/spotify/personalization/useTopArtistsShortTerm'
 import { TopGenreArea } from './TopGenreArea'
 
 enum Mode { MORE, LESS }

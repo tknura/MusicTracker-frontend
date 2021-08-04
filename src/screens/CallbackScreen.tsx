@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { useHistory } from 'react-router'
 import { Spinner, Center } from '@chakra-ui/react'
 
-import { useAuthorizeSpotifyMutation } from 'api/auth'
+import { useAuthorizeSpotifyMutation } from 'api/hooks/auth/useAuthorizeSpotifyMutation'
 import { useAuthSpotify, useUserId } from 'components/providers/AuthProvider'
 import { APP_CONNECTION_ROUTE } from 'constants/routeNames'
 import { useRedirectUri } from 'components/providers/SpotifyApiProvider'
