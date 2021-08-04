@@ -5,7 +5,7 @@ import { formatDistance } from 'date-fns'
 import { pl } from 'date-fns/locale'
 import { useTranslation } from 'react-i18next'
 
-import { useTrack } from 'api/spotify/tracks'
+import { useTrack } from 'api/hooks/spotify/tracks/useTrack'
 
 interface RecentTrackAreaProps {
   artist: string
