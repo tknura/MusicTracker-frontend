@@ -7,7 +7,7 @@ import {
   Link
 } from '@chakra-ui/react'
 
-import TextField from 'components/ui/TextField'
+import { TextField } from 'components/ui/TextField'
 import { loginSchema } from 'schemas/loginFormSchema'
 import * as Styled from './form.styles'
 

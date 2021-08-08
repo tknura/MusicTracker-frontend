@@ -20,7 +20,7 @@ const TextField = ({
   required,
   ...props
 }: TextFieldProps) => (
-  <FormControl isInvalid={!!errorMessage && !!touched} mt={5}>
+  <FormControl isInvalid={!!errorMessage && touched} mt={5}>
     {!!label && <FormLabel>{label}</FormLabel>}
     <Input
       variant="filled"
@@ -31,4 +31,5 @@ const TextField = ({
   </FormControl>
 )
 
-export default TextField
+export type { TextFieldProps }
+export { TextField }
