@@ -7,7 +7,7 @@ export interface GetTokensValues {
 
 export interface SaveFbTokensValues {
   userId: number
-  fbUserId: number
+  fbUserId: string
   accessToken: string
 }
 

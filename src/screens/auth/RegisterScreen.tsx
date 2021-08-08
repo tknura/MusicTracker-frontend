@@ -30,7 +30,7 @@ const RegisterScreen = (): JSX.Element => {
     })
   }
 
-  const handleRedirectToRegister = () => {
+  const handleRedirectToLogin = () => {
     history.push(LOGIN_ROUTE)
   }
 
@@ -44,7 +44,7 @@ const RegisterScreen = (): JSX.Element => {
           <Button
             variant="ghost"
             colorScheme="secondary"
-            onClick={handleRedirectToRegister}
+            onClick={handleRedirectToLogin}
             w="100%"
           >
             {t('screens.login.noAccount')}

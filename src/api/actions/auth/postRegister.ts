@@ -11,7 +11,7 @@ export async function postRegister(
   registerData.append('email', values.email)
   registerData.append('password1', values.password1)
   registerData.append('password2', values.password2)
-  registerData.append('consent', values.regulamin.toString())
+  registerData.append('consent', values.consent ? 'yes' : 'no')
 
   const { data } = await instance.post('/register.php', registerData)
   return data

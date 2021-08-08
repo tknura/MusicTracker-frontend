@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { useHistory } from 'react-router'
 import { Box, Button, Center, Divider } from '@chakra-ui/react'
-import { FaFacebook, FaTwitter } from 'react-icons/fa'
+import { FaTwitter } from 'react-icons/fa'
 import FacebookLogin, { ReactFacebookFailureResponse, ReactFacebookLoginInfo } from 'react-facebook-login'
 
 import { useRefreshTokensMutation } from 'api/hooks/auth/useRefreshTokensMutation'
@@ -11,6 +11,7 @@ import { RouteContainer } from 'components/navigation/RouteContainer'
 import { useAuthSpotify, useLogin } from 'components/providers/AuthProvider'
 import { AppLogo } from 'components/common/AppLogo/AppLogo'
 import { MAIN_ROUTE, REGISTER_ROUTE } from 'constants/routeNames'
+import { useFbLoginMutation } from 'api/hooks/auth/useFbLoginMutation'
 
 const LoginScreen = (): JSX.Element => {
   const { t } = useTranslation()
@@ -25,13 +26,21 @@ const LoginScreen = (): JSX.Element => {
     },
   })
 
+  const handleLogin = (newUserId: number) => {
+    login(newUserId)
+    refreshMutate({ apiType: 'Spotify', userId: newUserId })
+  }
+
   const { mutate: loginMutate } = useLoginMutation({
-    onSuccess: ({ user_id: newUserId }) => {
-      login(newUserId)
-      refreshMutate({ apiType: 'Spotify', userId: newUserId })
-    },
+    onSuccess: ({ user_id: newUserId }) => handleLogin(newUserId),
     // eslint-disable-next-line no-console
     onError: () => console.warn(t('screens.signIn.errors.generic'))
+  })
+
+  const { mutate: fbLoginMutate } = useFbLoginMutation({
+    onSuccess: ({ user_id: newUserId }) => handleLogin(newUserId),
+    // eslint-disable-next-line no-console
+    onError: (error) => console.warn(error)
   })
 
   const handleLoginSubmit = (values: LoginFormFields) => {
@@ -46,7 +55,13 @@ const LoginScreen = (): JSX.Element => {
   }
 
   const responseFacebook = (response: ReactFacebookLoginInfo | ReactFacebookFailureResponse) => {
-    console.log(response)
+    if ('accessToken' in response && 'email' in response && 'userID' in response) {
+      fbLoginMutate({
+        accessToken: response.accessToken,
+        email: response.email || '',
+        fbUserID: response.userID,
+      })
+    }
   }
 
   return (

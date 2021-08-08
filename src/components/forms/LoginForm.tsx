@@ -4,13 +4,10 @@ import {
   Flex,
   Spacer,
   Button,
-  FormControl,
-  FormLabel,
-  FormErrorMessage,
-  Input,
   Link
 } from '@chakra-ui/react'
 
+import TextField from 'components/ui/TextField'
 import { loginSchema } from 'schemas/loginFormSchema'
 import * as Styled from './form.styles'
 
@@ -45,31 +42,26 @@ const LoginForm = ({
 
   return (
     <Styled.Form autoComplete="off" onSubmit={handleFormSubmit}>
-      <FormControl isInvalid={touched.username && !!errors.username} mt={5}>
-        <FormLabel>{t('common.username')}</FormLabel>
-        <Input
-          id="username"
-          value={values.username}
-          onChange={handleChange}
-          required
-          placeholder={t('common.username')}
-          variant="filled"
-        />
-        <FormErrorMessage>{t(errors.username as string)}</FormErrorMessage>
-      </FormControl>
-      <FormControl isInvalid={touched.password && !!errors.password} mt={5}>
-        <FormLabel>{t('common.password')}</FormLabel>
-        <Input
-          id="password"
-          value={values.password}
-          onChange={handleChange}
-          required
-          type="password"
-          placeholder={t('common.password')}
-          variant="filled"
-        />
-        <FormErrorMessage>{t(errors.password as string)}</FormErrorMessage>
-      </FormControl>
+      <TextField
+        id="username"
+        value={values.username}
+        onChange={handleChange}
+        touched={touched.username}
+        placeholder={t('common.username')}
+        label={t('common.username')}
+        errorMessage={t(errors.username as string)}
+        required
+      />
+      <TextField
+        id="password"
+        value={values.password}
+        onChange={handleChange}
+        touched={touched.password}
+        placeholder={t('common.password')}
+        label={t('common.password')}
+        errorMessage={t(errors.password as string)}
+        required
+      />
       <Flex align="center" mt={5}>
         <Link
           component="button"

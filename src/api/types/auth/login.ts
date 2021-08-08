@@ -9,6 +9,6 @@ export interface LoginValues {
 
 export interface FbLoginValues {
   email: string
-  fbUserID: number
+  fbUserID: string
   accessToken: string
 }

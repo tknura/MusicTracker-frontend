@@ -1,13 +1,8 @@
 import { FormikHelpers, useFormik } from 'formik'
 import { useTranslation } from 'react-i18next'
-import {
-  Button,
-  FormControl,
-  FormLabel,
-  FormErrorMessage,
-  Input,
-} from '@chakra-ui/react'
+import { Button } from '@chakra-ui/react'
 
+import TextField from 'components/ui/TextField'
 import { registerSchema } from 'schemas/registerFormSchema'
 import * as Styled from './form.styles'
 
@@ -46,56 +41,46 @@ const RegisterForm = ({
 
   return (
     <Styled.Form autoComplete="off" onSubmit={handleFormSubmit}>
-      <FormControl isInvalid={!!errors.username && !!touched.username} mt={5}>
-        <FormLabel>{t('common.username')}</FormLabel>
-        <Input
-          id="username"
-          value={values.username}
-          onChange={handleChange}
-          required
-          placeholder={t('common.username')}
-          variant="filled"
-        />
-        <FormErrorMessage>{t(errors.username as string)}</FormErrorMessage>
-      </FormControl>
-      <FormControl isInvalid={touched.email && !!errors.email} mt={5}>
-        <FormLabel>{t('common.email')}</FormLabel>
-        <Input
-          id="email"
-          value={values.email}
-          onChange={handleChange}
-          required
-          placeholder={t('common.email')}
-          variant="filled"
-        />
-        <FormErrorMessage>{t(errors.email as string)}</FormErrorMessage>
-      </FormControl>
-      <FormControl isInvalid={touched.password && !!errors.password} mt={5}>
-        <FormLabel>{t('common.password')}</FormLabel>
-        <Input
-          id="password"
-          value={values.password}
-          onChange={handleChange}
-          required
-          type="password"
-          placeholder={t('common.password')}
-          variant="filled"
-        />
-        <FormErrorMessage>{t(errors.password as string)}</FormErrorMessage>
-      </FormControl>
-      <FormControl isInvalid={touched.repeatPassword && !!errors.repeatPassword} mt={5}>
-        <FormLabel>{t('screens.register.repeatPassword')}</FormLabel>
-        <Input
-          id="repeatPassword"
-          value={values.repeatPassword}
-          onChange={handleChange}
-          required
-          type="password"
-          placeholder={t('screens.register.repeatPassword')}
-          variant="filled"
-        />
-        <FormErrorMessage>{t(errors.password as string)}</FormErrorMessage>
-      </FormControl>
+      <TextField
+        id="username"
+        value={values.username}
+        onChange={handleChange}
+        touched={touched.username}
+        placeholder={t('common.username')}
+        label={t('common.username')}
+        errorMessage={t(errors.username as string)}
+        required
+      />
+      <TextField
+        id="email"
+        value={values.email}
+        onChange={handleChange}
+        touched={touched.email}
+        placeholder={t('common.email')}
+        label={t('common.email')}
+        errorMessage={t(errors.email as string)}
+        required
+      />
+      <TextField
+        id="password"
+        value={values.password}
+        onChange={handleChange}
+        touched={touched.password}
+        placeholder={t('common.password')}
+        label={t('common.password')}
+        errorMessage={t(errors.password as string)}
+        required
+      />
+      <TextField
+        id="repeatPassword"
+        value={values.repeatPassword}
+        onChange={handleChange}
+        touched={touched.repeatPassword}
+        placeholder={t('common.repeatPassword')}
+        label={t('common.repeatPassword')}
+        errorMessage={t(errors.repeatPassword as string)}
+        required
+      />
       <Button colorScheme="primary" type="submit" mt={5}>
         {t('screens.register.mainButton')}
       </Button>

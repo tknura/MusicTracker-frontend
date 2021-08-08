@@ -5,6 +5,7 @@ export const pl = {
       username: 'Nazwa użytkownika',
       email: 'E-mail',
       password: 'Hasło',
+      repeatPassword: 'Powtórz hasło',
       loginSpotify: 'Zaloguj się do Spotify',
       connectedSpotify: 'Połączono z spotify',
       back: 'Wróć',
@@ -19,6 +20,10 @@ export const pl = {
         password: {
           required: 'Hasło jest wymagane',
           toShort: 'Hasło powinno mieć conajmniej 8 znaków',
+        },
+        repeatPassword: {
+          notMatch: 'Podane hasło nie jest zgodne',
+          required: 'Powtórzenie hasła jest wymagane',
         },
       },
     },
@@ -36,14 +41,9 @@ export const pl = {
       },
       register: {
         mainButton: 'Zarejestruj się',
-        repeatPassword: 'Powtórz hasło',
         success: 'Zarejestrowano pomyślnie',
         haveAccount: 'Masz już konto? Zaloguj się',
         errors: {
-          repeatPassword: {
-            notMatch: 'Podane hasło nie jest zgodne',
-            required: 'Powtórzenie hasła jest wymagane',
-          },
           generic: 'Wystąpił nieznany błąd podczas rejestracji'
         },
       },
