@@ -47,6 +47,9 @@ export const en = {
           generic: 'An undefined error occurred during registration, try again later.'
         },
       },
+      socialRegister: {
+        helper: 'To use the system, please enter your account information below. You will be able to use them to log into the system or any other login method of your choice.',
+      },
       main: {
         recentTracks: 'Recent tracks',
         ago: 'ago',

@@ -47,6 +47,9 @@ export const pl = {
           generic: 'Wystąpił nieznany błąd podczas rejestracji'
         },
       },
+      socialRegister: {
+        helper: 'Aby móc korzystać z systemu ustal poniższe dane do twojego konta. Będziesz mógł z nich skorzystać do zalogowania się do systemu lub z innej wybranej metody logowania.',
+      },
       main: {
         recentTracks: 'Ostatnie utwory',
         ago: 'temu',
