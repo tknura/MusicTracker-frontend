@@ -1,6 +1,10 @@
 import { useState } from 'react'
 import constate from 'constate'
+import { useHistory } from 'react-router'
+
 import { USER_ID } from 'constants/localStorageKeys'
+import { useRefreshTokensMutation } from 'api/hooks/auth/useRefreshTokensMutation'
+import { MAIN_ROUTE } from 'constants/routeNames'
 
 interface SpotifyUserData {
   accessToken: string
@@ -12,16 +16,25 @@ interface User {
 }
 
 const useAuthorization = () => {
+  const history = useHistory()
   const [user, setUser] = useState<User | null>({
     userId: parseInt(localStorage.getItem(USER_ID) || '', 10)
   })
   const [spotifyData, setSpotifyData] = useState<SpotifyUserData | null>(null)
+
+  const { mutate: refreshMutate } = useRefreshTokensMutation({
+    onSuccess: ({ access_token: newAccessToken }) => {
+      authSpotify(newAccessToken)
+      history.push(MAIN_ROUTE)
+    },
+  })
 
   const login = (userId: number) => {
     setUser({
       userId,
     })
     localStorage.setItem(USER_ID, userId.toString())
+    refreshMutate({ apiType: 'Spotify', userId })
   }
   const logout = () => {
     setUser(null)

@@ -17,10 +17,12 @@ interface SocialRegisterFormProps {
     values: SocialRegisterFormFields,
     helpers: FormikHelpers<SocialRegisterFormFields>
   ) => void
+  isLoading?: boolean
 }
 
 const SocialRegisterForm = ({
-  onSubmit: handleSubmit = () => null
+  onSubmit: handleSubmit = () => null,
+  isLoading,
 }: SocialRegisterFormProps): JSX.Element => {
   const { t } = useTranslation()
 
@@ -63,6 +65,7 @@ const SocialRegisterForm = ({
         placeholder={t('common.password')}
         label={t('common.password')}
         errorMessage={t(errors.password as string)}
+        type="password"
         required
       />
       <TextField
@@ -74,9 +77,15 @@ const SocialRegisterForm = ({
         placeholder={t('common.repeatPassword')}
         label={t('common.repeatPassword')}
         errorMessage={t(errors.repeatPassword as string)}
+        type="password"
         required
       />
-      <Button colorScheme="primary" type="submit" mt={5}>
+      <Button
+        isLoading={isLoading}
+        colorScheme="primary"
+        type="submit"
+        mt={5}
+      >
         {t('screens.register.mainButton')}
       </Button>
     </Styled.Form>

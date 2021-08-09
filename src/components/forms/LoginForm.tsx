@@ -18,10 +18,12 @@ interface LoginFormFields {
 
 interface LoginFormProps {
   onSubmit?: (values: LoginFormFields, helpers: FormikHelpers<LoginFormFields>) => void
+  isLoading?: boolean
 }
 
 const LoginForm = ({
-  onSubmit: handleSubmit = () => null
+  onSubmit: handleSubmit = () => null,
+  isLoading = false
 }: LoginFormProps): JSX.Element => {
   const { t } = useTranslation()
 
@@ -70,7 +72,11 @@ const LoginForm = ({
           {t('screens.login.resetPassword')}
         </Link>
         <Spacer />
-        <Button colorScheme="primary" type="submit">
+        <Button
+          isLoading={isLoading}
+          colorScheme="primary"
+          type="submit"
+        >
           {t('screens.login.mainButton')}
         </Button>
       </Flex>

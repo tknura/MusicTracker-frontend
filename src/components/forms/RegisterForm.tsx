@@ -15,10 +15,12 @@ interface RegisterFormFields {
 
 interface RegisterFormProps {
   onSubmit?: (values: RegisterFormFields, helpers: FormikHelpers<RegisterFormFields>) => void
+  isLoading?: boolean
 }
 
 const RegisterForm = ({
-  onSubmit: handleSubmit = () => null
+  onSubmit: handleSubmit = () => null,
+  isLoading,
 }: RegisterFormProps): JSX.Element => {
   const { t } = useTranslation()
 
@@ -88,7 +90,12 @@ const RegisterForm = ({
         type="password"
         required
       />
-      <Button colorScheme="primary" type="submit" mt={5}>
+      <Button
+        isLoading={isLoading}
+        colorScheme="primary"
+        type="submit"
+        mt={5}
+      >
         {t('screens.register.mainButton')}
       </Button>
     </Styled.Form>

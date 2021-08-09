@@ -12,7 +12,7 @@ const RegisterScreen = (): JSX.Element => {
   const { t } = useTranslation()
   const history = useHistory()
 
-  const { mutate: registerMutate } = useRegisterMutation({
+  const { mutate: registerMutate, isLoading } = useRegisterMutation({
     onSuccess: () => {
       history.push(LOGIN_ROUTE)
     },
@@ -39,7 +39,7 @@ const RegisterScreen = (): JSX.Element => {
       <Center w="100%">
         <Box maxW="500px" p={5}>
           <AppLogo />
-          <RegisterForm onSubmit={handleRegisterSubmit} />
+          <RegisterForm isLoading={isLoading} onSubmit={handleRegisterSubmit} />
           <Divider colorScheme="primary" mt={10} mb={10} />
           <Button
             variant="ghost"

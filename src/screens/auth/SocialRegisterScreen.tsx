@@ -6,24 +6,30 @@ import { AppLogo } from 'components/common/AppLogo/AppLogo'
 import { SocialRegisterForm, SocialRegisterFormFields } from 'components/forms/SocialRegisterForm'
 import { RouteContainer } from 'components/navigation/RouteContainer'
 import { useRegisterMutation } from 'api/hooks/auth/useRegisterMutation'
-import { MAIN_ROUTE } from 'constants/routeNames'
+import { useLogin } from 'components/providers/AuthProvider'
+import { useFbLoginMutation } from 'api/hooks/auth/useFbLoginMutation'
+import { FbLoginValues } from 'api/types/auth/login'
 
 const SocialRegisterScreen = () => {
   const { t } = useTranslation()
+  const login = useLogin()
   const history = useHistory()
+  const fbLoginData = history.location.state as FbLoginValues
 
-  const { mutate: registerMutate } = useRegisterMutation({
+  const { mutate: fbLoginMutate, isLoading: isFbLoginLoading } = useFbLoginMutation({
+    onSuccess: ({ user_id: newUserId }) => login(newUserId),
+  })
+
+  const { mutate: registerMutate, isLoading } = useRegisterMutation({
     onSuccess: () => {
-      history.push(MAIN_ROUTE)
+      fbLoginMutate(fbLoginData)
     },
-    // eslint-disable-next-line no-console
-    onError: () => console.warn(t('screen.signIn.errors.generic'))
   })
 
   const handleRegisterSubmit = (values: SocialRegisterFormFields) => {
     registerMutate({
       nick: values.username,
-      email: 'placeholder@xd.pl',
+      email: fbLoginData.email,
       password1: values.password,
       password2: values.repeatPassword,
       consent: true,
@@ -36,7 +42,10 @@ const SocialRegisterScreen = () => {
         <Box w="100%" maxW="500px" p={5}>
           <AppLogo />
           <Text mt="10" align="center">{t('screens.socialRegister.helper')}</Text>
-          <SocialRegisterForm onSubmit={handleRegisterSubmit} />
+          <SocialRegisterForm
+            isLoading={isLoading || isFbLoginLoading}
+            onSubmit={handleRegisterSubmit}
+          />
         </Box>
       </Center>
     </RouteContainer>
