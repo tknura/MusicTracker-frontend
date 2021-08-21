@@ -2,14 +2,11 @@ import { useTranslation } from 'react-i18next'
 import { useHistory } from 'react-router'
 import { Box, Button, Center, Divider } from '@chakra-ui/react'
 import { FaTwitter } from 'react-icons/fa'
-import FacebookLogin, {
-  ReactFacebookFailureResponse,
-  ReactFacebookLoginInfo
-} from 'react-facebook-login'
 
 import { useLoginMutation } from 'api/hooks/auth/useLoginMutation'
 import { LoginForm, LoginFormFields } from 'components/forms/LoginForm'
 import { RouteContainer } from 'components/navigation/RouteContainer'
+import { FacebookLoginButton, FacebookLoginResponse } from 'components/ui/FacebookLoginButton/FacebookLoginButton'
 import { useLogin } from 'components/providers/AuthProvider'
 import { AppLogo } from 'components/common/AppLogo/AppLogo'
 import { REGISTER_ROUTE, SOCIAL_REGISTER_ROUTE } from 'constants/routeNames'
@@ -47,12 +44,12 @@ const LoginScreen = (): JSX.Element => {
     history.push(REGISTER_ROUTE)
   }
 
-  const responseFacebook = (response: ReactFacebookLoginInfo | ReactFacebookFailureResponse) => {
-    if ('accessToken' in response && 'email' in response && 'userID' in response) {
+  const responseFacebook = ({ authData, userData }: FacebookLoginResponse) => {
+    if ('accessToken' in authData && 'email' in userData && 'userID' in authData) {
       fbLoginMutate({
-        accessToken: response.accessToken,
-        email: response.email || '',
-        fbUserID: response.userID,
+        accessToken: authData.accessToken,
+        email: userData.email || '',
+        fbUserID: authData.userID,
       })
     }
   }
@@ -66,13 +63,10 @@ const LoginScreen = (): JSX.Element => {
           <LoginForm isLoading={isLoginLoading || isFbLoginLoading} onSubmit={handleLoginSubmit} />
           <Divider colorScheme="primary" mt={10} mb={10} />
           {process.env.REACT_APP_FACEBOOK_APP_ID && (
-            <FacebookLogin
-              appId={process.env.REACT_APP_FACEBOOK_APP_ID || ''}
-              autoLoad
-              fields="name,email,picture"
-              onClick={() => null}
+            <FacebookLoginButton
               callback={responseFacebook}
-              cssClass="chakra-button css-1j7an4u"
+              w="100%"
+              my={3}
             />
           )}
           <Button

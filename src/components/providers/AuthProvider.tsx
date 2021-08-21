@@ -35,6 +35,7 @@ const useAuthorization = () => {
     })
     localStorage.setItem(USER_ID, userId.toString())
     refreshMutate({ apiType: 'Spotify', userId })
+    history.push(MAIN_ROUTE)
   }
   const logout = () => {
     setUser(null)

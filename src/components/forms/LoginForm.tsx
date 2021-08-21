@@ -63,6 +63,7 @@ const LoginForm = ({
         label={t('common.password')}
         errorMessage={t(errors.password as string)}
         required
+        type="password"
       />
       <Flex align="center" mt={5}>
         <Link
