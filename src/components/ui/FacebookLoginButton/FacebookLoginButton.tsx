@@ -1,6 +1,8 @@
 import { MouseEvent } from 'react'
 import { Button, ButtonProps } from '@chakra-ui/react'
+import { useTranslation } from 'react-i18next'
 import { FaFacebook } from 'react-icons/fa'
+
 import { useInitFacebookSdk } from './useInitFacebookSdk'
 
 interface FacebookLoginButtonProps extends ButtonProps {
@@ -25,7 +27,10 @@ const FacebookLoginButton = ({
   callback,
   ...props
 }: FacebookLoginButtonProps) => {
+  const { t } = useTranslation()
+
   useInitFacebookSdk()
+
   const handleFbLogin = async (event: MouseEvent<HTMLButtonElement>) => {
     onClick?.(event)
     FB.login((authResponse) => {
@@ -47,7 +52,7 @@ const FacebookLoginButton = ({
       onClick={handleFbLogin}
       {...props}
     >
-      Login wit Facebook
+      {t('common.loginFacebook')}
     </Button>
   )
 }

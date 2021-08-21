@@ -9,7 +9,7 @@ import { RouteContainer } from 'components/navigation/RouteContainer'
 import { FacebookLoginButton, FacebookLoginResponse } from 'components/ui/FacebookLoginButton/FacebookLoginButton'
 import { useLogin } from 'components/providers/AuthProvider'
 import { AppLogo } from 'components/common/AppLogo/AppLogo'
-import { REGISTER_ROUTE, SOCIAL_REGISTER_ROUTE } from 'constants/routeNames'
+import { APP_CONNECTION_ROUTE, MAIN_ROUTE, REGISTER_ROUTE, SOCIAL_REGISTER_ROUTE } from 'constants/routeNames'
 import { useFbLoginMutation } from 'api/hooks/auth/useFbLoginMutation'
 
 const LoginScreen = (): JSX.Element => {
@@ -17,12 +17,17 @@ const LoginScreen = (): JSX.Element => {
   const history = useHistory()
   const login = useLogin()
 
+  const handleLogin = async (userId: number) => {
+    const { isSpotifyConnected } = await login(userId)
+    history.push(isSpotifyConnected ? MAIN_ROUTE : APP_CONNECTION_ROUTE)
+  }
+
   const { mutate: loginMutate, isLoading: isLoginLoading } = useLoginMutation({
-    onSuccess: ({ user_id: newUserId }) => login(newUserId),
+    onSuccess: async ({ user_id: newUserId }) => { await handleLogin(newUserId) },
   })
 
   const { mutate: fbLoginMutate, isLoading: isFbLoginLoading } = useFbLoginMutation({
-    onSuccess: ({ user_id: newUserId }) => login(newUserId),
+    onSuccess: async ({ user_id: newUserId }) => { await handleLogin(newUserId) },
     onError: (error, variables) => {
       if (error.response?.status === 400) {
         history.push({

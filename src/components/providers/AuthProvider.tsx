@@ -1,10 +1,8 @@
 import { useState } from 'react'
 import constate from 'constate'
-import { useHistory } from 'react-router'
 
 import { USER_ID } from 'constants/localStorageKeys'
 import { useRefreshTokensMutation } from 'api/hooks/auth/useRefreshTokensMutation'
-import { MAIN_ROUTE } from 'constants/routeNames'
 
 interface SpotifyUserData {
   accessToken: string
@@ -16,27 +14,28 @@ interface User {
 }
 
 const useAuthorization = () => {
-  const history = useHistory()
   const [user, setUser] = useState<User | null>({
     userId: parseInt(localStorage.getItem(USER_ID) || '', 10)
   })
   const [spotifyData, setSpotifyData] = useState<SpotifyUserData | null>(null)
 
-  const { mutate: refreshMutate } = useRefreshTokensMutation({
-    onSuccess: ({ access_token: newAccessToken }) => {
-      authSpotify(newAccessToken)
-      history.push(MAIN_ROUTE)
-    },
-  })
+  const { mutateAsync: refreshMutate } = useRefreshTokensMutation({})
 
-  const login = (userId: number) => {
+  const login = async (userId: number) => {
     setUser({
       userId,
     })
     localStorage.setItem(USER_ID, userId.toString())
-    refreshMutate({ apiType: 'Spotify', userId })
-    history.push(MAIN_ROUTE)
+
+    try {
+      const { access_token: newAccessToken } = await refreshMutate({ apiType: 'Spotify', userId })
+      authSpotify(newAccessToken)
+      return { isSpotifyConnected: true }
+    } catch {
+      return ({ isSpotifyConnected: false })
+    }
   }
+
   const logout = () => {
     setUser(null)
     localStorage.setItem(USER_ID, '')
