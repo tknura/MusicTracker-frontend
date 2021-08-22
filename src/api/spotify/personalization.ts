@@ -2,77 +2,28 @@ import { useSpotifyApi } from 'components/providers/FetchProvider'
 import { useQuery, UseQueryResult } from 'react-query'
 import SpotifyWebApi from 'spotify-web-api-node'
 
-const getTopArtistsLongTerm = async (api: SpotifyWebApi)
+const getTopArtists = async (api: SpotifyWebApi, timeRange: 'long_term' | 'medium_term' | 'short_term')
 : Promise<SpotifyApi.UsersTopArtistsResponse> => {
-  const { body } = await api.getMyTopArtists({ time_range: 'long_term' })
+  const { body } = await api.getMyTopArtists({ time_range: timeRange })
   return body
 }
 
-const getTopArtistsMediumTerm = async (api: SpotifyWebApi)
-: Promise<SpotifyApi.UsersTopArtistsResponse> => {
-  const { body } = await api.getMyTopArtists()
-  return body
-}
-
-const getTopArtistsShortTerm = async (api: SpotifyWebApi)
-: Promise<SpotifyApi.UsersTopArtistsResponse> => {
-  const { body } = await api.getMyTopArtists({ time_range: 'short_term' })
-  return body
-}
-
-const useTopArtistsLongTerm = ()
+const useTopArtists = (timeRange: 'long_term' | 'medium_term' | 'short_term')
 : UseQueryResult<SpotifyApi.UsersTopArtistsResponse, unknown> => {
   const spotifyApi = useSpotifyApi()
-  return useQuery('artistsLong', () => getTopArtistsLongTerm(spotifyApi))
+  return useQuery(['artists', timeRange], () => getTopArtists(spotifyApi, timeRange))
 }
 
-const useTopArtistsMediumTerm = ()
-: UseQueryResult<SpotifyApi.UsersTopArtistsResponse, unknown> => {
-  const spotifyApi = useSpotifyApi()
-  return useQuery('artistsMedium', () => getTopArtistsMediumTerm(spotifyApi))
-}
-
-const useTopArtistsShortTerm = ()
-: UseQueryResult<SpotifyApi.UsersTopArtistsResponse, unknown> => {
-  const spotifyApi = useSpotifyApi()
-  return useQuery('artistsShort', () => getTopArtistsShortTerm(spotifyApi))
-}
-
-const getTopTracksLongTerm = async (api: SpotifyWebApi)
+const getTopTracks = async (api: SpotifyWebApi, timeRange: 'long_term' | 'medium_term' | 'short_term')
 : Promise<SpotifyApi.UsersTopTracksResponse> => {
-  const { body } = await api.getMyTopTracks({ time_range: 'long_term' })
+  const { body } = await api.getMyTopTracks({ time_range: timeRange })
   return body
 }
 
-const getTopTracksMediumTerm = async (api: SpotifyWebApi)
-: Promise<SpotifyApi.UsersTopTracksResponse> => {
-  const { body } = await api.getMyTopTracks()
-  return body
-}
-
-const getTopTracksShortTerm = async (api: SpotifyWebApi)
-: Promise<SpotifyApi.UsersTopTracksResponse> => {
-  const { body } = await api.getMyTopTracks({ time_range: 'short_term' })
-  return body
-}
-
-const useTopTracksLongTerm = ()
+const useTopTracks = (timeRange: 'long_term' | 'medium_term' | 'short_term')
 : UseQueryResult<SpotifyApi.UsersTopTracksResponse, unknown> => {
   const spotifyApi = useSpotifyApi()
-  return useQuery('tracksLong', () => getTopTracksLongTerm(spotifyApi))
+  return useQuery(['tracks', timeRange], () => getTopTracks(spotifyApi, timeRange))
 }
 
-const useTopTracksMediumTerm = ()
-: UseQueryResult<SpotifyApi.UsersTopTracksResponse, unknown> => {
-  const spotifyApi = useSpotifyApi()
-  return useQuery('tracksMedium', () => getTopTracksMediumTerm(spotifyApi))
-}
-
-const useTopTracksShortTerm = ()
-: UseQueryResult<SpotifyApi.UsersTopTracksResponse, unknown> => {
-  const spotifyApi = useSpotifyApi()
-  return useQuery('tracksShort', () => getTopTracksShortTerm(spotifyApi))
-}
-
-export { useTopArtistsLongTerm, useTopArtistsMediumTerm, useTopArtistsShortTerm,
-  useTopTracksLongTerm, useTopTracksMediumTerm, useTopTracksShortTerm }
+export { useTopArtists, useTopTracks }

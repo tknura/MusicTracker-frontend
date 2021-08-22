@@ -9,7 +9,7 @@ interface RegisterValues {
   email: string
   password1: string
   password2: string
-  regulamin: boolean
+  consent: boolean
 }
 
 interface LoginValues {
@@ -38,7 +38,7 @@ const postRegister = async (
   registerData.append('email', values.email)
   registerData.append('password1', values.password1)
   registerData.append('password2', values.password2)
-  registerData.append('regulamin', values.regulamin.toString())
+  registerData.append('consent', values.consent.toString())
 
   const { data } = await instance.post('/register.php', registerData)
   return data

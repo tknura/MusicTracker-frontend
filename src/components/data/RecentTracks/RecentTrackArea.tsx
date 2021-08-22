@@ -1,5 +1,7 @@
 import { Stack, Image, Link, Text } from '@chakra-ui/react'
+// eslint-disable-next-line import/no-duplicates
 import { formatDistance } from 'date-fns'
+// eslint-disable-next-line import/no-duplicates
 import { pl } from 'date-fns/locale'
 import { useTranslation } from 'react-i18next'
 
@@ -10,13 +12,15 @@ interface RecentTrackAreaProps {
   track: string
   id: string
   time: Date
+  isCurrent: boolean
 }
 
 const RecentTrackArea = ({
   artist,
   track,
   id,
-  time
+  time,
+  isCurrent
 }: RecentTrackAreaProps): JSX.Element => {
   const { data } = useTrack(id)
   const { t, i18n } = useTranslation()
@@ -26,27 +30,47 @@ const RecentTrackArea = ({
     <Stack
       direction="row"
       align="center"
+      position="relative"
     >
       <Image
         boxSize="60px"
-        src={data?.album.images[1].url}
+        src={data?.album.images[0].url}
         alt=""
         mr={8}
       />
-      <Stack direction="row" maxW="55%">
-        <Link fontSize="lg" href={data?.artists[0].external_urls.spotify}>
-          {artist}
-        </Link>
-        <Text fontSize="lg">
-          {' - '}
+      <Stack
+        direction={['column', 'row']}
+        justify="space-between"
+        align="baseline"
+        w="100%"
+      >
+        <Stack
+          direction={['column', 'row']}
+          align="baseline"
+        >
+          <Link
+            fontSize="xl"
+            href={data?.external_urls.spotify}
+            color={isCurrent ? 'secondary.900' : 'default'}
+            as="b"
+          >
+            {track}
+          </Link>
+          <Link
+            fontSize="md"
+            href={data?.artists[0].external_urls.spotify}
+            color={isCurrent ? 'secondary.900' : 'default'}
+          >
+            {artist}
+          </Link>
+        </Stack>
+        <Text
+          fontSize="sm"
+          color={isCurrent ? 'secondary.900' : 'default'}
+        >
+          {isCurrent ? t('screens.main.playingNow') : `${timeDistance} ${t('screens.main.ago')}`}
         </Text>
-        <Link fontSize="lg" href={data?.external_urls.spotify}>
-          {track}
-        </Link>
       </Stack>
-      <Text fontSize="lg" pos="absolute" right="5%" maxW="20%">
-        {`${timeDistance} ${t('screens.main.ago')}`}
-      </Text>
     </Stack>
   )
 }
