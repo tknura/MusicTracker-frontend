@@ -6,6 +6,8 @@ export const en = {
       email: 'E-mail',
       password: 'Password',
       loginSpotify: 'Log in into Spotify',
+      connectedSpotify: 'Connected with spotify',
+      back: 'Go back',
       errors: {
         username: {
           required: 'Username is required',

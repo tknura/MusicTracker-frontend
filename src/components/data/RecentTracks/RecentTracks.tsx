@@ -2,7 +2,8 @@ import { Stack, StackDivider, Text, Button } from '@chakra-ui/react'
 import { useTranslation } from 'react-i18next'
 import { useState, useMemo } from 'react'
 
-import { useRecentlyPlayedTracks, useCurrentlyPlaying } from 'api/spotify/player'
+import { useRecentlyPlayedTracks } from 'api/hooks/spotify/player/useRecentlyPlayedTracks'
+import { useCurrentlyPlaying } from 'api/hooks/spotify/player/useCurrentlyPlaying'
 import { RecentTrackArea } from 'components/data/RecentTracks/RecentTrackArea'
 
 enum Mode { MORE, LESS }
