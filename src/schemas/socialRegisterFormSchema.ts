@@ -1,13 +1,9 @@
 import * as yup from 'yup'
 
-export const registerSchema = yup.object().shape({
+export const socialRegisterSchema = yup.object().shape({
   username: yup
     .string()
     .required('common.errors.username.required'),
-  email: yup
-    .string()
-    .email('common.errors.email.format')
-    .required('common.errors.email.required'),
   password: yup
     .string()
     .required('common.errors.password.required')

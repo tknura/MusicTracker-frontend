@@ -17,15 +17,15 @@ const AppProviders = (
   { children }: AppProvidersProps
 ): JSX.Element => (
   <QueryClientProvider client={queryClient}>
-    <AuthProvider>
-      <FetchProvider>
+    <FetchProvider>
+      <AuthProvider>
         <SpotifyApiProvider>
           <ChakraProvider theme={theme}>
             {children}
           </ChakraProvider>
         </SpotifyApiProvider>
-      </FetchProvider>
-    </AuthProvider>
+      </AuthProvider>
+    </FetchProvider>
   </QueryClientProvider>
 )
 

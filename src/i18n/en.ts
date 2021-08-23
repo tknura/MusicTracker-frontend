@@ -5,9 +5,11 @@ export const en = {
       username: 'Username',
       email: 'E-mail',
       password: 'Password',
+      repeatPassword: 'Repeat password',
       loginSpotify: 'Log in into Spotify',
       connectedSpotify: 'Connected with spotify',
       back: 'Go back',
+      loginFacebook: 'Continue with Facebook',
       errors: {
         username: {
           required: 'Username is required',
@@ -19,6 +21,10 @@ export const en = {
         password: {
           required: 'Password is required.',
           toShort: 'Password should be minimum 8 characters long.',
+        },
+        repeatPassword: {
+          notMatch: 'Passwords doesn\'t match.',
+          required: 'Repeat password is required.',
         },
       },
     },
@@ -36,16 +42,14 @@ export const en = {
       },
       register: {
         mainButton: 'Register',
-        repeatPassword: 'Repeat password',
         success: 'User registered successfully.',
         haveAccount: 'Already have an account? Log in',
         errors: {
-          repeatPassword: {
-            notMatch: 'Passwords doesn\'t match.',
-            required: 'Repeat password is required.',
-          },
           generic: 'An undefined error occurred during registration, try again later.'
         },
+      },
+      socialRegister: {
+        helper: 'To use the system, please enter your account information below. You will be able to use them to log into the system or any other login method of your choice.',
       },
       main: {
         recentTracks: 'Recent tracks',

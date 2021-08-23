@@ -1,36 +1,41 @@
 import { useTranslation } from 'react-i18next'
 import { useHistory } from 'react-router'
 import { Box, Button, Center, Divider } from '@chakra-ui/react'
-import { FaFacebook, FaTwitter } from 'react-icons/fa'
+import { FaTwitter } from 'react-icons/fa'
 
-import { useRefreshTokensMutation } from 'api/hooks/auth/useRefreshTokensMutation'
 import { useLoginMutation } from 'api/hooks/auth/useLoginMutation'
 import { LoginForm, LoginFormFields } from 'components/forms/LoginForm'
 import { RouteContainer } from 'components/navigation/RouteContainer'
-import { useAuthSpotify, useLogin } from 'components/providers/AuthProvider'
+import { FacebookLoginButton, FacebookLoginResponse } from 'components/ui/FacebookLoginButton/FacebookLoginButton'
+import { useLogin } from 'components/providers/AuthProvider'
 import { AppLogo } from 'components/common/AppLogo/AppLogo'
-import { MAIN_ROUTE, REGISTER_ROUTE } from 'constants/routeNames'
+import { APP_CONNECTION_ROUTE, MAIN_ROUTE, REGISTER_ROUTE, SOCIAL_REGISTER_ROUTE } from 'constants/routeNames'
+import { useFbLoginMutation } from 'api/hooks/auth/useFbLoginMutation'
 
 const LoginScreen = (): JSX.Element => {
   const { t } = useTranslation()
   const history = useHistory()
   const login = useLogin()
-  const authSpotify = useAuthSpotify()
 
-  const { mutate: refreshMutate } = useRefreshTokensMutation({
-    onSuccess: ({ access_token: newAccessToken }) => {
-      authSpotify(newAccessToken)
-      history.push(MAIN_ROUTE)
-    },
+  const handleLogin = async (userId: number) => {
+    const { isSpotifyConnected } = await login(userId)
+    history.push(isSpotifyConnected ? MAIN_ROUTE : APP_CONNECTION_ROUTE)
+  }
+
+  const { mutate: loginMutate, isLoading: isLoginLoading } = useLoginMutation({
+    onSuccess: async ({ user_id: newUserId }) => { await handleLogin(newUserId) },
   })
 
-  const { mutate: loginMutate } = useLoginMutation({
-    onSuccess: ({ user_id: newUserId }) => {
-      login(newUserId)
-      refreshMutate({ apiType: 'Spotify', userId: newUserId })
-    },
-    // eslint-disable-next-line no-console
-    onError: () => console.warn(t('screens.signIn.errors.generic'))
+  const { mutate: fbLoginMutate, isLoading: isFbLoginLoading } = useFbLoginMutation({
+    onSuccess: async ({ user_id: newUserId }) => { await handleLogin(newUserId) },
+    onError: (error, variables) => {
+      if (error.response?.status === 400) {
+        history.push({
+          pathname: SOCIAL_REGISTER_ROUTE,
+          state: variables
+        })
+      }
+    }
   })
 
   const handleLoginSubmit = (values: LoginFormFields) => {
@@ -44,26 +49,36 @@ const LoginScreen = (): JSX.Element => {
     history.push(REGISTER_ROUTE)
   }
 
+  const responseFacebook = ({ authData, userData }: FacebookLoginResponse) => {
+    if ('accessToken' in authData && 'email' in userData && 'userID' in authData) {
+      fbLoginMutate({
+        accessToken: authData.accessToken,
+        email: userData.email || '',
+        fbUserID: authData.userID,
+      })
+    }
+  }
+
   return (
     <RouteContainer>
       <Center w="100%">
+        <div id="fb-root" />
         <Box maxW="500px" p={5}>
           <AppLogo />
-          <LoginForm onSubmit={handleLoginSubmit} />
+          <LoginForm isLoading={isLoginLoading || isFbLoginLoading} onSubmit={handleLoginSubmit} />
           <Divider colorScheme="primary" mt={10} mb={10} />
-          <Button
-            colorScheme="facebook"
-            leftIcon={<FaFacebook />}
-            w="100%"
-            mb={3}
-          >
-            Facebook
-          </Button>
+          {process.env.REACT_APP_FACEBOOK_APP_ID && (
+            <FacebookLoginButton
+              callback={responseFacebook}
+              w="100%"
+              my={3}
+            />
+          )}
           <Button
             colorScheme="twitter"
             leftIcon={<FaTwitter />}
             w="100%"
-            mb={3}
+            my={3}
           >
             Twitter
           </Button>

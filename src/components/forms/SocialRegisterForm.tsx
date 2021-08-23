@@ -1,45 +1,46 @@
 import { FormikHelpers, useFormik } from 'formik'
 import { useTranslation } from 'react-i18next'
-import {
-  Flex,
-  Spacer,
-  Button,
-  Link
-} from '@chakra-ui/react'
+import { Button } from '@chakra-ui/react'
 
 import { TextField } from 'components/ui/TextField'
-import { loginSchema } from 'schemas/loginFormSchema'
+import { socialRegisterSchema } from 'schemas/socialRegisterFormSchema'
 import * as Styled from './form.styles'
 
-interface LoginFormFields {
+interface SocialRegisterFormFields {
   username: string
   password: string
+  repeatPassword: string
 }
 
-interface LoginFormProps {
-  onSubmit?: (values: LoginFormFields, helpers: FormikHelpers<LoginFormFields>) => void
+interface SocialRegisterFormProps {
+  onSubmit?: (
+    values: SocialRegisterFormFields,
+    helpers: FormikHelpers<SocialRegisterFormFields>
+  ) => void
   isLoading?: boolean
 }
 
-const LoginForm = ({
+const SocialRegisterForm = ({
   onSubmit: handleSubmit = () => null,
-  isLoading = false
-}: LoginFormProps): JSX.Element => {
+  isLoading,
+}: SocialRegisterFormProps): JSX.Element => {
   const { t } = useTranslation()
 
   const {
     handleSubmit: handleFormSubmit,
     handleChange,
+    handleBlur,
     values,
     errors,
     touched,
-  } = useFormik({
+  } = useFormik<SocialRegisterFormFields>({
     initialValues: {
       username: '',
       password: '',
+      repeatPassword: '',
     },
     onSubmit: handleSubmit,
-    validationSchema: loginSchema,
+    validationSchema: socialRegisterSchema,
   })
 
   return (
@@ -48,6 +49,7 @@ const LoginForm = ({
         id="username"
         value={values.username}
         onChange={handleChange}
+        onBlur={handleBlur}
         touched={touched.username}
         placeholder={t('common.username')}
         label={t('common.username')}
@@ -58,32 +60,37 @@ const LoginForm = ({
         id="password"
         value={values.password}
         onChange={handleChange}
+        onBlur={handleBlur}
         touched={touched.password}
         placeholder={t('common.password')}
         label={t('common.password')}
         errorMessage={t(errors.password as string)}
-        required
         type="password"
+        required
       />
-      <Flex align="center" mt={5}>
-        <Link
-          component="button"
-          href="/"
-        >
-          {t('screens.login.resetPassword')}
-        </Link>
-        <Spacer />
-        <Button
-          isLoading={isLoading}
-          colorScheme="primary"
-          type="submit"
-        >
-          {t('screens.login.mainButton')}
-        </Button>
-      </Flex>
+      <TextField
+        id="repeatPassword"
+        value={values.repeatPassword}
+        onChange={handleChange}
+        onBlur={handleBlur}
+        touched={touched.repeatPassword}
+        placeholder={t('common.repeatPassword')}
+        label={t('common.repeatPassword')}
+        errorMessage={t(errors.repeatPassword as string)}
+        type="password"
+        required
+      />
+      <Button
+        isLoading={isLoading}
+        colorScheme="primary"
+        type="submit"
+        mt={5}
+      >
+        {t('screens.register.mainButton')}
+      </Button>
     </Styled.Form>
   )
 }
 
-export { LoginForm }
-export type { LoginFormFields }
+export { SocialRegisterForm }
+export type { SocialRegisterFormFields }

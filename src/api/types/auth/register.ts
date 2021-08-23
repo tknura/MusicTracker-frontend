@@ -3,5 +3,5 @@ export interface RegisterValues {
   email: string
   password1: string
   password2: string
-  regulamin: boolean
+  consent: boolean
 }

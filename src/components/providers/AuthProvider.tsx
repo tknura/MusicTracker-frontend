@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import constate from 'constate'
+
 import { USER_ID } from 'constants/localStorageKeys'
+import { useRefreshTokensMutation } from 'api/hooks/auth/useRefreshTokensMutation'
 
 interface SpotifyUserData {
   accessToken: string
@@ -17,12 +19,23 @@ const useAuthorization = () => {
   })
   const [spotifyData, setSpotifyData] = useState<SpotifyUserData | null>(null)
 
-  const login = (userId: number) => {
+  const { mutateAsync: refreshMutate } = useRefreshTokensMutation({})
+
+  const login = async (userId: number) => {
     setUser({
       userId,
     })
     localStorage.setItem(USER_ID, userId.toString())
+
+    try {
+      const { access_token: newAccessToken } = await refreshMutate({ apiType: 'Spotify', userId })
+      authSpotify(newAccessToken)
+      return { isSpotifyConnected: true }
+    } catch {
+      return ({ isSpotifyConnected: false })
+    }
   }
+
   const logout = () => {
     setUser(null)
     localStorage.setItem(USER_ID, '')
