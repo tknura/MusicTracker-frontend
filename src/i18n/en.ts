@@ -10,6 +10,7 @@ export const en = {
       connectedSpotify: 'Connected with spotify',
       back: 'Go back',
       loginFacebook: 'Continue with Facebook',
+      friends: 'Friends',
       errors: {
         username: {
           required: 'Username is required',

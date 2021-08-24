@@ -9,7 +9,8 @@ export const pl = {
       loginSpotify: 'Zaloguj się do Spotify',
       connectedSpotify: 'Połączono z spotify',
       back: 'Wróć',
-      loginFacebook: 'Kontunuuj z Facebookiem',
+      loginFacebook: 'Kontynuuj z Facebookiem',
+      friends: 'Znajomi',
       errors: {
         username: {
           required: 'Nazwa użytkownika jest wymagana',
