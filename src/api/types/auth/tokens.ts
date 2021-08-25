@@ -1,7 +1,9 @@
+import { ID } from '../ID'
+
 type ApiType = 'Spotify'
 
 export interface GetTokensValues {
-  userId: number
+  userId: ID
   apiType: ApiType
 }
 
