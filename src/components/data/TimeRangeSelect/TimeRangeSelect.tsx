@@ -14,6 +14,7 @@ const TimeRangeSelect: React.FC<SelectProps> = ({
       size="lg"
       variant="flushed"
       maxW="40%"
+      {...rest}
     >
       <option disabled>{t('screens.main.chooseTime')}</option>
       <option value={SHORT}>{t('screens.main.fourWeeks')}</option>
