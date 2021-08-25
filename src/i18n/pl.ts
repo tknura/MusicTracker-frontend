@@ -67,6 +67,13 @@ export const pl = {
         fourWeeks: '4 tygodnie',
         playingNow: 'grany teraz'
       },
+      friends: {
+        addFriend: 'Wyślij zaproszenie',
+        friendUsername: 'Nazwa użytkownika znajomego',
+        pending: 'Oczekuje na akceptacje',
+        pendingList: 'Zaproszenia',
+        list: 'Lista znajomych',
+      },
     },
   }
 }

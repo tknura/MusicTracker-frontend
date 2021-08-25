@@ -66,7 +66,14 @@ export const en = {
         sixMonths: '6 months',
         fourWeeks: '4 weeks',
         playingNow: 'playing now'
-      }
+      },
+      friends: {
+        addFriend: 'Send an invite',
+        friendUsername: 'Friend\'s username',
+        pending: 'Pending invite',
+        pendingList: 'Invitations',
+        list: 'Friends list',
+      },
     },
   },
 }
