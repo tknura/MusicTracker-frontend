@@ -1,18 +1,18 @@
-import { Stack, StackDivider, Text, Button, Select } from '@chakra-ui/react'
+import { Stack, StackDivider, Text, Button } from '@chakra-ui/react'
 import { useTranslation } from 'react-i18next'
-import { useEffect, useState } from 'react'
+import { useState, useEffect } from 'react'
 
-import { useTopArtistsLongTerm } from 'api/hooks/spotify/personalization/useTopArtistsLongTerm'
-import { useTopArtistsMediumTerm } from 'api/hooks/spotify/personalization/useTopArtistsMediumTerm'
-import { useTopArtistsShortTerm } from 'api/hooks/spotify/personalization/useTopArtistsShortTerm'
+import { LONG, MEDIUM, SHORT } from 'constants/timeRanges'
+import { TimeRangeSelect } from 'components/data/TimeRangeSelect/TimeRangeSelect'
+import { useTopArtists } from 'api/spotify/personalization'
 import { TopArtistArea } from './TopArtistArea'
 
 enum Mode { MORE, LESS }
 
 const TopArtists = (): JSX.Element => {
-  const { data: longTermData } = useTopArtistsLongTerm()
-  const { data: mediumTermData } = useTopArtistsMediumTerm()
-  const { data: shortTermData } = useTopArtistsShortTerm()
+  const { data: longTermData } = useTopArtists(LONG)
+  const { data: mediumTermData } = useTopArtists(MEDIUM)
+  const { data: shortTermData } = useTopArtists(SHORT)
   const [data, setData] = useState(shortTermData)
   const { t } = useTranslation()
   const [itemsToShow, setItemsToShow] = useState(8)
@@ -20,9 +20,9 @@ const TopArtists = (): JSX.Element => {
 
   const handleChange = (e :React.ChangeEvent<HTMLSelectElement>) => {
     switch (e.target.value) {
-      case 's': setData(shortTermData); break
-      case 'm': setData(mediumTermData); break
-      case 'l': setData(longTermData); break
+      case SHORT: setData(shortTermData); break
+      case MEDIUM: setData(mediumTermData); break
+      case LONG: setData(longTermData); break
       default: break
     }
   }
@@ -38,18 +38,22 @@ const TopArtists = (): JSX.Element => {
   return (
     <Stack
       divider={<StackDivider borderColor="gray.700" />}
-      w={500}
+      margin="0 50px"
       paddingTop={35}
     >
-      <Stack direction="row" justifyContent="space-between">
-        <Text fontSize="4xl" maxW="80%">
+      <Stack
+        direction="row"
+        align="center"
+        justify="space-between"
+      >
+        <Text
+          fontSize="xl"
+          maxW="60%"
+          as="b"
+        >
           {t('screens.main.topArtists')}
         </Text>
-        <Select size="lg" variant="flushed" maxW="30%" top="30%" defaultValue="s" placeholder={t('screens.main.chooseTime')} onChange={handleChange}>
-          <option value="s">{t('screens.main.fourWeeks')}</option>
-          <option value="m">{t('screens.main.sixMonths')}</option>
-          <option value="l">{t('screens.main.allTime')}</option>
-        </Select>
+        <TimeRangeSelect onChange={handleChange} />
       </Stack>
       {data?.items.length !== 0 ? (
         data?.items.slice(0, itemsToShow).map((row) => (
@@ -65,7 +69,10 @@ const TopArtists = (): JSX.Element => {
             {t('screens.main.empty')}
           </Text>
         )}
-      <Button variant="link" onClick={showMore}>
+      <Button
+        variant="link"
+        onClick={showMore}
+      >
         {mode === Mode.LESS ? (
           t('screens.main.showMore')
         ) : (
