@@ -9,7 +9,8 @@ export const pl = {
       loginSpotify: 'Zaloguj się do Spotify',
       connectedSpotify: 'Połączono z spotify',
       back: 'Wróć',
-      loginFacebook: 'Kontunuuj z Facebookiem',
+      loginFacebook: 'Kontynuuj z Facebookiem',
+      friends: 'Znajomi',
       errors: {
         username: {
           required: 'Nazwa użytkownika jest wymagana',
@@ -65,6 +66,16 @@ export const pl = {
         sixMonths: '6 miesięcy',
         fourWeeks: '4 tygodnie',
         playingNow: 'grany teraz'
+      },
+      friends: {
+        addFriend: 'Wyślij zaproszenie',
+        friendUsername: 'Nazwa użytkownika znajomego',
+        pending: 'Oczekuje na akceptacje',
+        pendingList: 'Zaproszenia',
+        pendingListEmpty: 'Brak zaproszeń.',
+        list: 'Lista znajomych',
+        listEmpty: 'Dodaj znajomych aby pojawili się na tej liście.',
+        friendNotFound: 'Nie ma takiego użytkownika',
       },
     },
   }

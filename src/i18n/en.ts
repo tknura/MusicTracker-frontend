@@ -10,6 +10,7 @@ export const en = {
       connectedSpotify: 'Connected with spotify',
       back: 'Go back',
       loginFacebook: 'Continue with Facebook',
+      friends: 'Friends',
       errors: {
         username: {
           required: 'Username is required',
@@ -65,7 +66,17 @@ export const en = {
         sixMonths: '6 months',
         fourWeeks: '4 weeks',
         playingNow: 'playing now'
-      }
+      },
+      friends: {
+        addFriend: 'Send an invite',
+        friendUsername: 'Friend\'s username',
+        pending: 'Pending invite',
+        pendingList: 'Invitations',
+        pendingListEmpty: 'No invitations',
+        list: 'Friends list',
+        listEmpty: 'Add some friends to be shown',
+        friendNotFound: 'User with provided username doesn\'t exist',
+      },
     },
   },
 }
