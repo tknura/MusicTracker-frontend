@@ -1,11 +1,13 @@
-import { Stack, Image, Link, Text } from '@chakra-ui/react'
+import { Stack, Image, Link, Text, HStack } from '@chakra-ui/react'
 // eslint-disable-next-line import/no-duplicates
 import { formatDistance } from 'date-fns'
 // eslint-disable-next-line import/no-duplicates
 import { pl } from 'date-fns/locale'
 import { useTranslation } from 'react-i18next'
+import { FacebookShareButton, TwitterShareButton } from 'react-share'
 
 import { useTrack } from 'api/hooks/spotify/tracks/useTrack'
+import { FaFacebook, FaTwitter } from 'react-icons/fa'
 
 interface RecentTrackAreaProps {
   artist: string
@@ -64,12 +66,22 @@ const RecentTrackArea = ({
             {artist}
           </Link>
         </Stack>
-        <Text
-          fontSize="sm"
-          color={isCurrent ? 'secondary.900' : 'default'}
-        >
-          {isCurrent ? t('screens.main.playingNow') : `${timeDistance} ${t('screens.main.ago')}`}
-        </Text>
+        <HStack spacing="5">
+          <FacebookShareButton url={data?.external_urls.spotify || ''}>
+            <FaFacebook />
+          </FacebookShareButton>
+          <TwitterShareButton url={data?.external_urls.spotify || ''}>
+            <FaTwitter />
+          </TwitterShareButton>
+          <Text
+            minWidth="100px"
+            textAlign="right"
+            fontSize="sm"
+            color={isCurrent ? 'secondary.900' : 'default'}
+          >
+            {isCurrent ? t('screens.main.playingNow') : `${timeDistance} ${t('screens.main.ago')}`}
+          </Text>
+        </HStack>
       </Stack>
     </Stack>
   )
