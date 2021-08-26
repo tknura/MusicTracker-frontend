@@ -75,6 +75,7 @@ export const pl = {
         pendingListEmpty: 'Brak zaproszeń.',
         list: 'Lista znajomych',
         listEmpty: 'Dodaj znajomych aby pojawili się na tej liście.',
+        friendNotFound: 'Nie ma takiego użytkownika',
       },
     },
   }
