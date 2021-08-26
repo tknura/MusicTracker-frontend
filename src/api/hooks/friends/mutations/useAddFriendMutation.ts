@@ -8,7 +8,7 @@ import { postAddFriend } from 'api/actions/friends/postAddFriend'
 export const ADD_FRIEND_MUTATTION_KEY = 'add-friend'
 
 export const useAddFriendMutation = (
-  options: UseMutationOptions<AxiosResponse, AxiosError, AddFriendsValues>
+  options?: UseMutationOptions<AxiosResponse, AxiosError, AddFriendsValues>
 ) => {
   const { fetch } = useFetch()
 
