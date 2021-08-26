@@ -9,6 +9,6 @@ export async function getFriendByUsername(
   const getByUsernameData = new FormData()
   getByUsernameData.append('login', values.username)
 
-  const { data } = await instance.post('/getuserbyname.php', getByUsernameData)
+  const { data } = await instance.post('/getusersbyname.php', getByUsernameData)
   return data
 }
