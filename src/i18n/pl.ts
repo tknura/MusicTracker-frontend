@@ -72,7 +72,9 @@ export const pl = {
         friendUsername: 'Nazwa użytkownika znajomego',
         pending: 'Oczekuje na akceptacje',
         pendingList: 'Zaproszenia',
+        pendingListEmpty: 'Brak zaproszeń.',
         list: 'Lista znajomych',
+        listEmpty: 'Dodaj znajomych aby pojawili się na tej liście.',
       },
     },
   }
