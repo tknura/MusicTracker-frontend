@@ -1,13 +1,14 @@
-import { Stack, Image, Link, Text, HStack } from '@chakra-ui/react'
+import { Stack, Image, Link, Text } from '@chakra-ui/react'
 // eslint-disable-next-line import/no-duplicates
 import { formatDistance } from 'date-fns'
 // eslint-disable-next-line import/no-duplicates
 import { pl } from 'date-fns/locale'
 import { useTranslation } from 'react-i18next'
 import { FacebookShareButton, TwitterShareButton } from 'react-share'
+import { SiFacebook, SiTwitter, SiGenius } from 'react-icons/si'
 
 import { useTrack } from 'api/hooks/spotify/tracks/useTrack'
-import { FaFacebook, FaTwitter } from 'react-icons/fa'
+import { useSearch } from 'api/hooks/genius/useSearch'
 
 interface RecentTrackAreaProps {
   artist: string
@@ -24,9 +25,16 @@ const RecentTrackArea = ({
   time,
   isCurrent
 }: RecentTrackAreaProps): JSX.Element => {
-  const { data } = useTrack(id)
   const { t, i18n } = useTranslation()
   const timeDistance = i18n.language === 'pl' ? formatDistance(new Date(), time, { locale: pl }) : formatDistance(new Date(), time)
+
+  const { data } = useTrack(id)
+
+  const { data: geniusData } = useSearch(`${artist} ${track}`)
+  let geniusPath = 'http://genius.com'
+  if (geniusData?.response.hits.length !== 0) {
+    geniusPath += geniusData?.response.hits[0].result.path
+  }
 
   return (
     <Stack
@@ -43,7 +51,6 @@ const RecentTrackArea = ({
       <Stack
         direction={['column', 'row']}
         justify="space-between"
-        align="baseline"
         w="100%"
       >
         <Stack
@@ -66,22 +73,33 @@ const RecentTrackArea = ({
             {artist}
           </Link>
         </Stack>
-        <HStack spacing="5">
-          <FacebookShareButton url={data?.external_urls.spotify || ''}>
-            <FaFacebook />
-          </FacebookShareButton>
-          <TwitterShareButton url={data?.external_urls.spotify || ''}>
-            <FaTwitter />
-          </TwitterShareButton>
+        <Stack
+          direction={['column-reverse', 'row']}
+          align={['baseline', 'center']}
+        >
+          <Stack
+            direction="row"
+            margin={['5px 0', '0 10px']}
+          >
+            <FacebookShareButton url={data?.external_urls.spotify || ''}>
+              <SiFacebook />
+            </FacebookShareButton>
+            <TwitterShareButton url={data?.external_urls.spotify || ''}>
+              <SiTwitter />
+            </TwitterShareButton>
+            <Link href={geniusPath}>
+              <SiGenius />
+            </Link>
+          </Stack>
           <Text
             minWidth="100px"
-            textAlign="right"
+            textAlign={['left', 'right']}
             fontSize="sm"
             color={isCurrent ? 'secondary.900' : 'default'}
           >
             {isCurrent ? t('screens.main.playingNow') : `${timeDistance} ${t('screens.main.ago')}`}
           </Text>
-        </HStack>
+        </Stack>
       </Stack>
     </Stack>
   )

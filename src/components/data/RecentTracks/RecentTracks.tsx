@@ -9,12 +9,13 @@ import { RecentTrackArea } from 'components/data/RecentTracks/RecentTrackArea'
 enum Mode { MORE, LESS }
 
 const RecentTracks = (): JSX.Element => {
-  const { data } = useRecentlyPlayedTracks()
-  const { data: currentlyPlayingResponse } = useCurrentlyPlaying()
   const { t } = useTranslation()
-
   const [itemsToShow, setItemsToShow] = useState(8)
   const [mode, setMode] = useState<Mode>(Mode.LESS)
+
+  const { data } = useRecentlyPlayedTracks()
+
+  const { data: currentlyPlayingResponse } = useCurrentlyPlaying()
 
   const currentTrack = useMemo(() => (
     currentlyPlayingResponse?.currently_playing_type === 'track'
