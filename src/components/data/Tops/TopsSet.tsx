@@ -6,9 +6,9 @@ import { TopGenresArea } from './TopGenresArea'
 
 const TopsSet = (): JSX.Element => (
   <Stack direction="row" justify="space-evenly" wrap="wrap">
-    <TopArtistsArea py="35px" mx="20" />
-    <TopTracksArea py="35px" mx="20" />
-    <TopGenresArea py="35px" mx="20" />
+    <TopArtistsArea py="35px" px="20px" />
+    <TopTracksArea py="35px" px="20px" />
+    <TopGenresArea py="35px" px="20px" />
   </Stack>
 )
 
