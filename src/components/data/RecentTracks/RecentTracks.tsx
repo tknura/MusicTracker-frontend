@@ -9,20 +9,23 @@ import { RecentTrackArea } from 'components/data/RecentTracks/RecentTrackArea'
 enum Mode { MORE, LESS }
 
 const RecentTracks = (): JSX.Element => {
+  const { t } = useTranslation()
+  const [itemsToShow, setItemsToShow] = useState(8)
+  const [mode, setMode] = useState<Mode>(Mode.LESS)
+
   const { data } = useRecentlyPlayedTracks()
+
   const { data: currentlyPlayingResponse } = useCurrentlyPlaying()
   const currentTrack = useMemo(() =>
     currentlyPlayingResponse?.currently_playing_type === 'track'
       ? currentlyPlayingResponse.item as SpotifyApi.TrackObjectFull
       : null, [currentlyPlayingResponse])
-  const { t } = useTranslation()
-  const [itemsToShow, setItemsToShow] = useState(8)
-  const [mode, setMode] = useState<Mode>(Mode.LESS)
 
   const showMore = () => {
     mode === Mode.LESS ? setItemsToShow(20) : setItemsToShow(8)
     mode === Mode.LESS ? setMode(Mode.MORE) : setMode(Mode.LESS)
   }
+
   return (
     <Stack
       divider={<StackDivider borderColor="gray.700" />}

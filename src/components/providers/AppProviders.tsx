@@ -6,6 +6,7 @@ import { FetchProvider } from 'components/providers/FetchProvider'
 import { AuthProvider } from 'components/providers/AuthProvider'
 import { SpotifyApiProvider } from 'components/providers/SpotifyApiProvider'
 import { theme } from 'themes'
+import { GeniusApiProvider } from './GeniusApiProvider'
 
 interface AppProvidersProps {
   children: ReactNode
@@ -20,9 +21,11 @@ const AppProviders = (
     <FetchProvider>
       <AuthProvider>
         <SpotifyApiProvider>
-          <ChakraProvider theme={theme}>
-            {children}
-          </ChakraProvider>
+          <GeniusApiProvider>
+            <ChakraProvider theme={theme}>
+              {children}
+            </ChakraProvider>
+          </GeniusApiProvider>
         </SpotifyApiProvider>
       </AuthProvider>
     </FetchProvider>
