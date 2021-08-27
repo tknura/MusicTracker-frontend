@@ -1,5 +1,7 @@
+import { ID } from '../ID'
+
 export interface LoginResponse {
-  user_id: number
+  user_id: ID
 }
 
 export interface LoginValues {

@@ -2,7 +2,7 @@ import { useState } from 'react'
 import constate from 'constate'
 
 import { USER_ID } from 'constants/localStorageKeys'
-import { useRefreshTokensMutation } from 'api/hooks/auth/useRefreshTokensMutation'
+import { useRefreshTokensMutation } from 'api/hooks/auth/mutations/useRefreshTokensMutation'
 
 interface SpotifyUserData {
   accessToken: string

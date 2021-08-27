@@ -5,9 +5,9 @@ import { useHistory } from 'react-router'
 import { AppLogo } from 'components/common/AppLogo/AppLogo'
 import { SocialRegisterForm, SocialRegisterFormFields } from 'components/forms/SocialRegisterForm'
 import { RouteContainer } from 'components/navigation/RouteContainer'
-import { useRegisterMutation } from 'api/hooks/auth/useRegisterMutation'
+import { useRegisterMutation } from 'api/hooks/auth/mutations/useRegisterMutation'
 import { useLogin } from 'components/providers/AuthProvider'
-import { useFbLoginMutation } from 'api/hooks/auth/useFbLoginMutation'
+import { useFbLoginMutation } from 'api/hooks/auth/mutations/useFbLoginMutation'
 import { FbLoginValues } from 'api/types/auth/login'
 
 const SocialRegisterScreen = () => {

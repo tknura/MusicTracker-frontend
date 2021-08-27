@@ -1,6 +1,8 @@
+import { ID } from '../ID'
+
 export interface AuthorizeSpotifyValues {
   code: string
-  userId: number
+  userId: ID
   redirectUri: string
 }
 

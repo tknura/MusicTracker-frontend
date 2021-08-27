@@ -4,7 +4,7 @@ import SpotifyWebApi from 'spotify-web-api-node'
 
 import { CALLBACK_ROUTE } from 'constants/routeNames'
 import { useAuthSpotify, useSpotifyToken, useUserId } from 'components/providers/AuthProvider'
-import { useRefreshTokensMutation } from 'api/hooks/auth/useRefreshTokensMutation'
+import { useRefreshTokensMutation } from 'api/hooks/auth/mutations/useRefreshTokensMutation'
 
 const useSpotifyApiHelper = () => {
   const spotifyAccessToken = useSpotifyToken()

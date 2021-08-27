@@ -1,4 +1,4 @@
-import { Stack, StackDivider, Text, Button } from '@chakra-ui/react'
+import { Stack, StackDivider, Text, Button, Heading } from '@chakra-ui/react'
 import { useTranslation } from 'react-i18next'
 import { useState, useMemo } from 'react'
 
@@ -16,10 +16,16 @@ const RecentTracks = (): JSX.Element => {
   const { data } = useRecentlyPlayedTracks()
 
   const { data: currentlyPlayingResponse } = useCurrentlyPlaying()
-  const currentTrack = useMemo(() =>
+  const { t } = useTranslation()
+
+  const [itemsToShow, setItemsToShow] = useState(8)
+  const [mode, setMode] = useState<Mode>(Mode.LESS)
+
+  const currentTrack = useMemo(() => (
     currentlyPlayingResponse?.currently_playing_type === 'track'
       ? currentlyPlayingResponse.item as SpotifyApi.TrackObjectFull
-      : null, [currentlyPlayingResponse])
+      : null
+  ), [currentlyPlayingResponse])
 
   const showMore = () => {
     mode === Mode.LESS ? setItemsToShow(20) : setItemsToShow(8)
@@ -31,13 +37,10 @@ const RecentTracks = (): JSX.Element => {
       divider={<StackDivider borderColor="gray.700" />}
       margin="50px 50px 0 50px"
     >
-      <Text
-        fontSize="4xl"
-        as="b"
-      >
+      <Heading fontSize="4xl">
         {t('screens.main.recentTracks')}
-      </Text>
-      {currentlyPlayingResponse?.is_playing ? (
+      </Heading>
+      {currentlyPlayingResponse?.is_playing && (
         <RecentTrackArea
           artist={currentTrack?.artists[0].name || ''}
           track={currentTrack?.name || ''}
@@ -45,10 +48,8 @@ const RecentTracks = (): JSX.Element => {
           time={new Date()}
           isCurrent
         />
-      ) : (
-        null
       )}
-      {data?.items.length !== 0 ? (
+      {data?.items.length ? (
         data?.items.slice(0, itemsToShow).map((row) => (
           <RecentTrackArea
             key={row.played_at}
@@ -58,21 +59,14 @@ const RecentTracks = (): JSX.Element => {
             time={new Date(row.played_at)}
             isCurrent={false}
           />
-        )))
-        : (
-          <Text fontSize="lg">
-            {t('screens.main.empty')}
-          </Text>
-        )}
-      <Button
-        variant="link"
-        onClick={showMore}
-      >
-        {mode === Mode.LESS ? (
-          t('screens.main.showMore')
-        ) : (
-          t('screens.main.showLess')
-        )}
+        ))
+      ) : (
+        <Text fontSize="lg">
+          {t('screens.main.empty')}
+        </Text>
+      )}
+      <Button variant="link" onClick={showMore}>
+        {mode === Mode.LESS ? t('screens.main.showMore') : t('screens.main.showLess')}
       </Button>
     </Stack>
   )

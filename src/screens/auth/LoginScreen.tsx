@@ -3,14 +3,14 @@ import { useHistory } from 'react-router'
 import { Box, Button, Center, Divider } from '@chakra-ui/react'
 import { FaTwitter } from 'react-icons/fa'
 
-import { useLoginMutation } from 'api/hooks/auth/useLoginMutation'
+import { useLoginMutation } from 'api/hooks/auth/mutations/useLoginMutation'
 import { LoginForm, LoginFormFields } from 'components/forms/LoginForm'
 import { RouteContainer } from 'components/navigation/RouteContainer'
 import { FacebookLoginButton, FacebookLoginResponse } from 'components/ui/FacebookLoginButton/FacebookLoginButton'
 import { useLogin } from 'components/providers/AuthProvider'
 import { AppLogo } from 'components/common/AppLogo/AppLogo'
 import { APP_CONNECTION_ROUTE, MAIN_ROUTE, REGISTER_ROUTE, SOCIAL_REGISTER_ROUTE } from 'constants/routeNames'
-import { useFbLoginMutation } from 'api/hooks/auth/useFbLoginMutation'
+import { useFbLoginMutation } from 'api/hooks/auth/mutations/useFbLoginMutation'
 
 const LoginScreen = (): JSX.Element => {
   const { t } = useTranslation()
