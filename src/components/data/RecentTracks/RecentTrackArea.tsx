@@ -87,12 +87,12 @@ const RecentTrackArea = ({
             <TwitterShareButton url={data?.external_urls.spotify || ''}>
               <SiTwitter />
             </TwitterShareButton>
-            <Link href={geniusPath}>
+            <Link href={geniusPath} target="blank">
               <SiGenius />
             </Link>
           </Stack>
           <Text
-            minWidth="100px"
+            minWidth="150px"
             textAlign={['left', 'right']}
             fontSize="sm"
             color={isCurrent ? 'secondary.900' : 'default'}
