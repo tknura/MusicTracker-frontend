@@ -10,7 +10,7 @@ const AllFriendsList = (props: FriendsListProps): JSX.Element => {
   const { t } = useTranslation()
   const userId = useUserId()
 
-  const { data: friendsData, isLoading } = useFriendsQuery({ userId: userId || 0 })
+  const { data: friendsData, isLoading } = useFriendsQuery({ userId: userId || -1 })
   const friendsList = useMemo(() => (
     friendsData?.map(friend => ({
       id: friend.friend_id,

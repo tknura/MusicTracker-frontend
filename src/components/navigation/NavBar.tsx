@@ -1,16 +1,16 @@
-import { Button, Flex, IconButton, Spacer } from '@chakra-ui/react'
+import { Button, Flex, FlexProps, IconButton, Spacer } from '@chakra-ui/react'
 import { useTranslation } from 'react-i18next'
 import { FaRegSun, FaUserFriends } from 'react-icons/fa'
 import { useHistory } from 'react-router'
 
 import { APP_CONNECTION_ROUTE, FRIENDS_ROUTE } from 'constants/routeNames'
 
-const NavBar = (): JSX.Element => {
+const NavBar = (props: FlexProps): JSX.Element => {
   const history = useHistory()
   const { t } = useTranslation()
 
   return (
-    <Flex justify="flex-end" m={5}>
+    <Flex justify="flex-end" p={5} {...props}>
       <Button
         leftIcon={<FaUserFriends />}
         onClick={() => history.push(FRIENDS_ROUTE)}

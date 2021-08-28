@@ -10,7 +10,7 @@ const PendingFriendsList = (props: FriendsListProps): JSX.Element => {
   const { t } = useTranslation()
   const userId = useUserId()
 
-  const { data: pendingFriendsData, isLoading } = usePendingFriendsQuery({ userId: userId || 0 })
+  const { data: pendingFriendsData, isLoading } = usePendingFriendsQuery({ userId: userId || -1 })
 
   const pendingFriendsList = useMemo(() => (
     pendingFriendsData?.map((friend) => ({

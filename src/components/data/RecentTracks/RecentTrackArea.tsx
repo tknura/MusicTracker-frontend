@@ -4,11 +4,10 @@ import { formatDistance } from 'date-fns'
 // eslint-disable-next-line import/no-duplicates
 import { pl } from 'date-fns/locale'
 import { useTranslation } from 'react-i18next'
-import { FacebookShareButton, TwitterShareButton } from 'react-share'
-import { SiFacebook, SiTwitter, SiGenius } from 'react-icons/si'
 
 import { useTrack } from 'api/hooks/spotify/tracks/useTrack'
 import { useSearch } from 'api/hooks/genius/useSearch'
+import { RecentTrackActions } from './RecentTrackActions'
 
 interface RecentTrackAreaProps {
   artist: string
@@ -28,9 +27,9 @@ const RecentTrackArea = ({
   const { t, i18n } = useTranslation()
   const timeDistance = i18n.language === 'pl' ? formatDistance(new Date(), time, { locale: pl }) : formatDistance(new Date(), time)
 
+  const { data: geniusData } = useSearch(`${artist} ${track}`)
   const { data } = useTrack(id)
 
-  const { data: geniusData } = useSearch(`${artist} ${track}`)
   let geniusPath = 'http://genius.com'
   if (geniusData?.response.hits.length !== 0) {
     geniusPath += geniusData?.response.hits[0].result.path
@@ -77,20 +76,11 @@ const RecentTrackArea = ({
           direction={['column-reverse', 'row']}
           align={['baseline', 'center']}
         >
-          <Stack
-            direction="row"
-            margin={['5px 0', '0 10px']}
-          >
-            <FacebookShareButton url={data?.external_urls.spotify || ''}>
-              <SiFacebook />
-            </FacebookShareButton>
-            <TwitterShareButton url={data?.external_urls.spotify || ''}>
-              <SiTwitter />
-            </TwitterShareButton>
-            <Link href={geniusPath} target="blank">
-              <SiGenius />
-            </Link>
-          </Stack>
+          <RecentTrackActions
+            trackId={id}
+            trackUrl={data?.external_urls.spotify}
+            geniusPath={geniusPath}
+          />
           <Text
             minWidth="150px"
             textAlign={['left', 'right']}

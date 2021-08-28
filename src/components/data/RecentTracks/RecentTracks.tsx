@@ -5,9 +5,9 @@ import { useMemo } from 'react'
 import { useRecentlyPlayedTracks } from 'api/hooks/spotify/player/useRecentlyPlayedTracks'
 import { useCurrentlyPlaying } from 'api/hooks/spotify/player/useCurrentlyPlaying'
 import { RecentTrackArea } from 'components/data/RecentTracks/RecentTrackArea'
-import { TopArea } from 'components/ui/TopArea/TopArea'
+import { TopArea, TopAreaProps } from 'components/ui/TopArea/TopArea'
 
-const RecentTracks = (): JSX.Element => {
+const RecentTracks = (props: TopAreaProps): JSX.Element => {
   const { t } = useTranslation()
 
   const {
@@ -30,7 +30,7 @@ const RecentTracks = (): JSX.Element => {
   ), [currentlyPlayingResponse])
 
   return (
-    <TopArea margin="50px 50px 0 50px">
+    <TopArea {...props}>
       <Heading fontSize="4xl">
         {t('screens.main.recentTracks')}
       </Heading>
