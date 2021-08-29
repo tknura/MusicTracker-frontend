@@ -1,4 +1,4 @@
-import { Stack, Image, Link, Text } from '@chakra-ui/react'
+import { Stack, Image, Link, Text, StackProps } from '@chakra-ui/react'
 // eslint-disable-next-line import/no-duplicates
 import { formatDistance } from 'date-fns'
 // eslint-disable-next-line import/no-duplicates
@@ -9,7 +9,7 @@ import { useTrack } from 'api/hooks/spotify/tracks/useTrack'
 import { useSearch } from 'api/hooks/genius/useSearch'
 import { RecentTrackActions } from './RecentTrackActions'
 
-interface RecentTrackAreaProps {
+interface RecentTrackAreaProps extends StackProps {
   artist: string
   track: string
   id: string
@@ -22,7 +22,8 @@ const RecentTrackArea = ({
   track,
   id,
   time,
-  isCurrent
+  isCurrent,
+  ...props
 }: RecentTrackAreaProps): JSX.Element => {
   const { t, i18n } = useTranslation()
   const timeDistance = i18n.language === 'pl' ? formatDistance(new Date(), time, { locale: pl }) : formatDistance(new Date(), time)
@@ -40,6 +41,7 @@ const RecentTrackArea = ({
       direction="row"
       align="center"
       position="relative"
+      {...props}
     >
       <Image
         boxSize="60px"

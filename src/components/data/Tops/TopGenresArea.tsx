@@ -43,6 +43,8 @@ const TopGenresArea = (props: TopAreaProps): JSX.Element => {
       <Skeleton isLoaded={!isLoading}>
         <TopArea.List
           list={genreArray}
+          lessItemsToShow={14}
+          moreItemsToShow={30}
           renderItem={(item) => (
             <TopArea.ListItem
               key={item.name}
