@@ -11,6 +11,8 @@ export const pl = {
       back: 'Wróć',
       loginFacebook: 'Kontynuuj z Facebookiem',
       friends: 'Znajomi',
+      messages: 'Wiadomości',
+      and: 'i',
       errors: {
         username: {
           required: 'Nazwa użytkownika jest wymagana',
@@ -65,7 +67,12 @@ export const pl = {
         allTime: 'Cały czas',
         sixMonths: '6 miesięcy',
         fourWeeks: '4 tygodnie',
-        playingNow: 'grany teraz'
+        playingNow: 'grany teraz',
+        selectFriend: 'Wybierz znajomego',
+        send: 'Wyślij',
+        sent: 'Wysłano pomyślnie',
+        errorSending: 'Nie udało się wysłać wiadomości',
+        pendingFriends: 'Zaproszeń do znajomych',
       },
       friends: {
         addFriend: 'Wyślij zaproszenie',
@@ -77,6 +84,10 @@ export const pl = {
         listEmpty: 'Dodaj znajomych aby pojawili się na tej liście.',
         friendNotFound: 'Nie ma takiego użytkownika',
       },
+      messages: {
+        sends: 'wysyła Ci:',
+        empty: 'Brak wiadomości',
+      }
     },
   }
 }

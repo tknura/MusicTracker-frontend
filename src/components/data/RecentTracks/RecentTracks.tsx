@@ -1,21 +1,27 @@
-import { Stack, StackDivider, Text, Button, Heading } from '@chakra-ui/react'
+import { Heading, Skeleton } from '@chakra-ui/react'
 import { useTranslation } from 'react-i18next'
-import { useState, useMemo } from 'react'
+import { useMemo } from 'react'
 
 import { useRecentlyPlayedTracks } from 'api/hooks/spotify/player/useRecentlyPlayedTracks'
 import { useCurrentlyPlaying } from 'api/hooks/spotify/player/useCurrentlyPlaying'
 import { RecentTrackArea } from 'components/data/RecentTracks/RecentTrackArea'
+import { TopArea, TopAreaProps } from 'components/ui/TopArea/TopArea'
 
-enum Mode { MORE, LESS }
-
-const RecentTracks = (): JSX.Element => {
+const RecentTracks = (props: TopAreaProps): JSX.Element => {
   const { t } = useTranslation()
-  const [itemsToShow, setItemsToShow] = useState(8)
-  const [mode, setMode] = useState<Mode>(Mode.LESS)
 
-  const { data } = useRecentlyPlayedTracks()
+  const {
+    data: recentlyPlayedData,
+    isLoading: isRecentlyPlayedLoading
+  } = useRecentlyPlayedTracks()
+  const {
+    data: currentlyPlayingResponse,
+    isLoading: isCurrentlyPlayingLoading
+  } = useCurrentlyPlaying()
 
-  const { data: currentlyPlayingResponse } = useCurrentlyPlaying()
+  const recentlyPlayedTracks = useMemo(() => (
+    recentlyPlayedData?.items.map(item => ({ name: item.track.name, ...item }))
+  ), [recentlyPlayedData?.items])
 
   const currentTrack = useMemo(() => (
     currentlyPlayingResponse?.currently_playing_type === 'track'
@@ -23,48 +29,38 @@ const RecentTracks = (): JSX.Element => {
       : null
   ), [currentlyPlayingResponse])
 
-  const showMore = () => {
-    mode === Mode.LESS ? setItemsToShow(20) : setItemsToShow(8)
-    mode === Mode.LESS ? setMode(Mode.MORE) : setMode(Mode.LESS)
-  }
-
   return (
-    <Stack
-      divider={<StackDivider borderColor="gray.700" />}
-      margin="50px 50px 0 50px"
-    >
+    <TopArea {...props}>
       <Heading fontSize="4xl">
         {t('screens.main.recentTracks')}
       </Heading>
-      {currentlyPlayingResponse?.is_playing && (
-        <RecentTrackArea
-          artist={currentTrack?.artists[0].name || ''}
-          track={currentTrack?.name || ''}
-          id={currentTrack?.id || ''}
-          time={new Date()}
-          isCurrent
-        />
-      )}
-      {data?.items.length ? (
-        data?.items.slice(0, itemsToShow).map((row) => (
+      <Skeleton isLoaded={!isCurrentlyPlayingLoading}>
+        {currentlyPlayingResponse?.is_playing && (
           <RecentTrackArea
-            key={row.played_at}
-            artist={row.track.artists[0].name}
-            track={row.track.name}
-            id={row.track.id}
-            time={new Date(row.played_at)}
-            isCurrent={false}
+            artist={currentTrack?.artists[0].name || ''}
+            track={currentTrack?.name || ''}
+            id={currentTrack?.id || ''}
+            time={new Date()}
+            isCurrent
           />
-        ))
-      ) : (
-        <Text fontSize="lg">
-          {t('screens.main.empty')}
-        </Text>
-      )}
-      <Button variant="link" onClick={showMore}>
-        {mode === Mode.LESS ? t('screens.main.showMore') : t('screens.main.showLess')}
-      </Button>
-    </Stack>
+        )}
+      </Skeleton>
+      <Skeleton isLoaded={!isRecentlyPlayedLoading}>
+        <TopArea.List
+          list={recentlyPlayedTracks}
+          renderItem={(item) => (
+            <RecentTrackArea
+              key={`${item.played_at}-${item.track.id}`}
+              artist={item.track.artists[0].name}
+              track={item.name}
+              id={item.track.id}
+              time={new Date(item.played_at)}
+              isCurrent={false}
+            />
+          )}
+        />
+      </Skeleton>
+    </TopArea>
   )
 }
 

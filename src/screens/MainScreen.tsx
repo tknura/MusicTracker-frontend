@@ -6,8 +6,8 @@ import { NavBar } from 'components/navigation/NavBar'
 const MainScreen = (): JSX.Element => (
   <div>
     <NavBar />
-    <Box>
-      <RecentTracks />
+    <Box width="100%" overflowX="hidden">
+      <RecentTracks margin="50px 50px 0 50px" />
       <TopsSet />
     </Box>
   </div>

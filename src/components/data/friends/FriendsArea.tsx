@@ -10,7 +10,7 @@ const FriendsArea = (props: BoxProps) => {
   const { t } = useTranslation()
 
   return (
-    <Box {...props}>
+    <Box minW="300px" {...props}>
       <Heading fontSize="4xl">{t('common.friends')}</Heading>
       <AddFriendField />
       <Accordion mt={5} defaultIndex={[0, 1]} allowMultiple>

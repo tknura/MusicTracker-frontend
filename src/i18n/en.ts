@@ -11,6 +11,8 @@ export const en = {
       back: 'Go back',
       loginFacebook: 'Continue with Facebook',
       friends: 'Friends',
+      messages: 'Messages',
+      and: 'and',
       errors: {
         username: {
           required: 'Username is required',
@@ -65,7 +67,12 @@ export const en = {
         allTime: 'All time',
         sixMonths: '6 months',
         fourWeeks: '4 weeks',
-        playingNow: 'playing now'
+        playingNow: 'playing now',
+        selectFriend: 'Choose a friend',
+        send: 'Send',
+        sent: 'Send successfully',
+        errorSending: 'An error occured during sending a message',
+        pendingFriends: 'Friend invitations',
       },
       friends: {
         addFriend: 'Send an invite',
@@ -77,6 +84,10 @@ export const en = {
         listEmpty: 'Add some friends to be shown',
         friendNotFound: 'User with provided username doesn\'t exist',
       },
+      messages: {
+        sends: 'sends You:',
+        empty: 'No messages',
+      }
     },
   },
 }

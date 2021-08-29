@@ -1,5 +1,6 @@
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
+import { Skeleton } from '@chakra-ui/react'
 
 import { useFriendsQuery } from 'api/hooks/friends/queries/useFriendsQuery'
 import { useUserId } from 'components/providers/AuthProvider'
@@ -9,7 +10,7 @@ const AllFriendsList = (props: FriendsListProps): JSX.Element => {
   const { t } = useTranslation()
   const userId = useUserId()
 
-  const { data: friendsData } = useFriendsQuery({ userId: userId || 0 })
+  const { data: friendsData, isLoading } = useFriendsQuery({ userId: userId || -1 })
   const friendsList = useMemo(() => (
     friendsData?.map(friend => ({
       id: friend.friend_id,
@@ -18,11 +19,13 @@ const AllFriendsList = (props: FriendsListProps): JSX.Element => {
   ), [friendsData])
 
   return (
-    <FriendsList
-      items={friendsList}
-      emptyListText={t('screens.friends.listEmpty')}
-      {...props}
-    />
+    <Skeleton isLoaded={!isLoading}>
+      <FriendsList
+        items={friendsList}
+        emptyListText={t('screens.friends.listEmpty')}
+        {...props}
+      />
+    </Skeleton>
   )
 }
 

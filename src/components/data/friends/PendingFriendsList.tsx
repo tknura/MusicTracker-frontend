@@ -1,5 +1,6 @@
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
+import { Skeleton } from '@chakra-ui/react'
 
 import { useUserId } from 'components/providers/AuthProvider'
 import { usePendingFriendsQuery } from 'api/hooks/friends/queries/usePendingFriendsQuery'
@@ -9,7 +10,7 @@ const PendingFriendsList = (props: FriendsListProps): JSX.Element => {
   const { t } = useTranslation()
   const userId = useUserId()
 
-  const { data: pendingFriendsData } = usePendingFriendsQuery({ userId: userId || 0 })
+  const { data: pendingFriendsData, isLoading } = usePendingFriendsQuery({ userId: userId || -1 })
 
   const pendingFriendsList = useMemo(() => (
     pendingFriendsData?.map((friend) => ({
@@ -19,12 +20,14 @@ const PendingFriendsList = (props: FriendsListProps): JSX.Element => {
   ), [pendingFriendsData])
 
   return (
-    <FriendsList
-      items={pendingFriendsList}
-      emptyListText={t('screens.friends.pendingListEmpty')}
-      showAcceptButton
-      {...props}
-    />
+    <Skeleton isLoaded={!isLoading}>
+      <FriendsList
+        items={pendingFriendsList}
+        emptyListText={t('screens.friends.pendingListEmpty')}
+        showAcceptButton
+        {...props}
+      />
+    </Skeleton>
   )
 }
 

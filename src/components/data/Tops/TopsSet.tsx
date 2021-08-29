@@ -1,14 +1,14 @@
 import { Stack } from '@chakra-ui/react'
 
-import { TopArtists } from './TopArtists/TopArtists'
-import { TopTracks } from './TopTracks/TopTracks'
-import { TopGenres } from './TopGenres/TopGenres'
+import { TopArtistsArea } from './TopArtistsArea'
+import { TopTracksArea } from './TopTracksArea'
+import { TopGenresArea } from './TopGenresArea'
 
 const TopsSet = (): JSX.Element => (
   <Stack direction="row" justify="space-evenly" wrap="wrap">
-    <TopArtists />
-    <TopTracks />
-    <TopGenres />
+    <TopArtistsArea py="35px" px="20px" />
+    <TopTracksArea py="35px" px="20px" />
+    <TopGenresArea py="35px" px="20px" />
   </Stack>
 )
 
