@@ -71,7 +71,7 @@ export const pl = {
         selectFriend: 'Wybierz znajomego',
         send: 'Wyślij',
         sent: 'Wysłano pomyślnie',
-        error: 'Nie udało się wysłać wiadomości',
+        errorSending: 'Nie udało się wysłać wiadomości',
         pendingFriends: 'Zaproszeń do znajomych',
       },
       friends: {

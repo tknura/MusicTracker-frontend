@@ -84,7 +84,7 @@ const InternalShare = ({
         </PopoverBody>
         <PopoverFooter>
           {isSuccess && <Text color="green">{t('screens.main.sent')}</Text>}
-          {isError && <Text color="red">{t('screens.main.error')}</Text>}
+          {isError && <Text color="red">{t('screens.main.errorSending')}</Text>}
           {(!isSuccess || isLoading) && (
             <Button
               isLoading={isLoading}
