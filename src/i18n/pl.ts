@@ -83,7 +83,7 @@ export const pl = {
         friendNotFound: 'Nie ma takiego użytkownika',
       },
       messages: {
-
+        sends: 'wysyła Ci:'
       }
     },
   }

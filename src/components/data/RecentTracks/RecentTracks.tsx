@@ -50,7 +50,7 @@ const RecentTracks = (props: TopAreaProps): JSX.Element => {
           list={recentlyPlayedTracks}
           renderItem={(item) => (
             <RecentTrackArea
-              key={item.played_at}
+              key={`${item.played_at}-${item.track.id}`}
               artist={item.track.artists[0].name}
               track={item.name}
               id={item.track.id}
