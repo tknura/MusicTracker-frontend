@@ -12,6 +12,7 @@ export const pl = {
       loginFacebook: 'Kontynuuj z Facebookiem',
       friends: 'Znajomi',
       messages: 'Wiadomości',
+      and: 'i',
       errors: {
         username: {
           required: 'Nazwa użytkownika jest wymagana',
@@ -71,6 +72,7 @@ export const pl = {
         send: 'Wyślij',
         sent: 'Wysłano pomyślnie',
         error: 'Nie udało się wysłać wiadomości',
+        pendingFriends: 'Zaproszeń do znajomych',
       },
       friends: {
         addFriend: 'Wyślij zaproszenie',
@@ -83,7 +85,8 @@ export const pl = {
         friendNotFound: 'Nie ma takiego użytkownika',
       },
       messages: {
-        sends: 'wysyła Ci:'
+        sends: 'wysyła Ci:',
+        empty: 'Brak wiadomości',
       }
     },
   }

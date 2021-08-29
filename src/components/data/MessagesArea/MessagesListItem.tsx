@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { HStack, Image, Link, Stack, StackProps, Text } from '@chakra-ui/react'
+import { HStack, Image, LinkBox, LinkOverlay, Stack, StackProps, Text } from '@chakra-ui/react'
 
 import { useTrack } from 'api/hooks/spotify/tracks/useTrack'
 
@@ -20,9 +20,7 @@ const MessagesListItem = ({
 
   return (
     <Stack {...props}>
-      <Link
-        href={song?.external_urls.spotify}
-        isExternal
+      <LinkBox
         _hover={{ background: 'rgba(0,0,0,0.1)' }}
         _active={{ background: 'rgba(0,0,0,0.3)' }}
         p="5"
@@ -43,15 +41,19 @@ const MessagesListItem = ({
             align="flex-start"
             justifyContent="center"
           >
-            <Text fontSize="xl" as="b">
-              {song?.name || ''}
-            </Text>
+            <LinkOverlay
+              href={song?.external_urls.spotify}
+              isExternal
+              fontSize="xl"
+            >
+              <b>{song?.name || ''}</b>
+            </LinkOverlay>
             <Text fontSize="md">
               {song?.artists[0].name}
             </Text>
           </Stack>
         </HStack>
-      </Link>
+      </LinkBox>
     </Stack>
   )
 }

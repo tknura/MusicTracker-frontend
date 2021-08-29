@@ -9,9 +9,11 @@ import { useRefreshTokensMutation } from 'api/hooks/auth/mutations/useRefreshTok
 const useSpotifyApiHelper = () => {
   const spotifyAccessToken = useSpotifyToken()
   const userId = useUserId()
+  const authSpotify = useAuthSpotify()
+
   const spotifyApi = useMemo(() => new SpotifyWebApi(), [])
   const redirectUri = `${(new URL(window.location.href)).origin}${CALLBACK_ROUTE}`
-  const authSpotify = useAuthSpotify()
+
   const { mutate: refreshMutate } = useRefreshTokensMutation({
     onSuccess: ({ access_token: newAccessToken }) => {
       authSpotify(newAccessToken)

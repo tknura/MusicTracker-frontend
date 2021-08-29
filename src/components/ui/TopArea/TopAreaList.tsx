@@ -8,30 +8,38 @@ interface TopAreaListProps<T> extends StackProps {
   list?: T[]
   renderItem: (item: T) => ReactNode
   emptyText?: string
+  lessItemsToShow?: number
+  moreItemsToShow?: number
 }
 
 const TopAreaList = <T extends TopAreaItemType>({
-  list,
+  list = [],
   renderItem,
   emptyText,
+  lessItemsToShow = 8,
+  moreItemsToShow = 20,
   ...props
 }: TopAreaListProps<T>) => {
   const { t } = useTranslation()
-  const [itemsToShow, setItemsToShow] = useState<number>(8)
+  const [itemsToShow, setItemsToShow] = useState<number>(lessItemsToShow)
 
   return (
-    <Stack divider={<StackDivider borderColor="gray.700" />} {...props}>
+    <Stack {...props}>
       {list?.length !== 0 ? (
-        list?.slice(0, itemsToShow).map(renderItem)
+        <>
+          <Stack divider={<StackDivider borderColor="gray.700" />}>
+            {list?.slice(0, itemsToShow).map(renderItem)}
+            <ShowMoreToggle
+              onShowLess={() => setItemsToShow(lessItemsToShow)}
+              onShowMore={() => setItemsToShow(moreItemsToShow)}
+            />
+          </Stack>
+        </>
       ) : (
         <Text fontSize="lg">
           {emptyText || t('screens.main.empty')}
         </Text>
       )}
-      <ShowMoreToggle
-        onShowLess={() => setItemsToShow(8)}
-        onShowMore={() => setItemsToShow(20)}
-      />
     </Stack>
   )
 }
