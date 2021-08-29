@@ -5,13 +5,14 @@ import { useHistory } from 'react-router'
 
 import { APP_CONNECTION_ROUTE, FRIENDS_ROUTE } from 'constants/routeNames'
 import { useGetMessagesQuery } from 'api/hooks/messages/queries/useGetMessagesQuery'
-import { useUserId } from 'components/providers/AuthProvider'
+import { useLogout, useUserId } from 'components/providers/AuthProvider'
 import { usePendingFriendsQuery } from 'api/hooks/friends/queries/usePendingFriendsQuery'
 
 const NavBar = (props: FlexProps): JSX.Element => {
   const history = useHistory()
   const { t } = useTranslation()
   const userId = useUserId()
+  const logout = useLogout()
 
   const { data: messages } = useGetMessagesQuery({ userId: userId || -1 })
   const { data: pendingFriends } = usePendingFriendsQuery({ userId: userId || -1 })
@@ -35,12 +36,17 @@ const NavBar = (props: FlexProps): JSX.Element => {
         </VStack>
       </HStack>
       <Spacer />
-      <IconButton
-        colorScheme="primary"
-        aria-label="Search database"
-        icon={<FaRegSun />}
-        onClick={() => history.push(APP_CONNECTION_ROUTE)}
-      />
+      <HStack>
+        <IconButton
+          colorScheme="primary"
+          aria-label="Search database"
+          icon={<FaRegSun />}
+          onClick={() => history.push(APP_CONNECTION_ROUTE)}
+        />
+        <Button onClick={() => logout()}>
+          {t('common.logout')}
+        </Button>
+      </HStack>
     </Flex>
   )
 }

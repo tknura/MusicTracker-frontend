@@ -9,7 +9,7 @@ import { RouteContainer } from 'components/navigation/RouteContainer'
 import { FacebookLoginButton, FacebookLoginResponse } from 'components/ui/FacebookLoginButton/FacebookLoginButton'
 import { useLogin } from 'components/providers/AuthProvider'
 import { AppLogo } from 'components/common/AppLogo/AppLogo'
-import { APP_CONNECTION_ROUTE, MAIN_ROUTE, REGISTER_ROUTE, SOCIAL_REGISTER_ROUTE } from 'constants/routeNames'
+import { MAIN_ROUTE, REGISTER_ROUTE, SOCIAL_REGISTER_ROUTE } from 'constants/routeNames'
 import { useFbLoginMutation } from 'api/hooks/auth/mutations/useFbLoginMutation'
 
 const LoginScreen = (): JSX.Element => {
@@ -18,8 +18,8 @@ const LoginScreen = (): JSX.Element => {
   const login = useLogin()
 
   const handleLogin = async (userId: number) => {
-    const { isSpotifyConnected } = await login(userId)
-    history.push(isSpotifyConnected ? MAIN_ROUTE : APP_CONNECTION_ROUTE)
+    login(userId)
+    history.push(MAIN_ROUTE)
   }
 
   const { mutate: loginMutate, isLoading: isLoginLoading } = useLoginMutation({

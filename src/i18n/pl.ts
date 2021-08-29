@@ -13,6 +13,7 @@ export const pl = {
       friends: 'Znajomi',
       messages: 'Wiadomości',
       and: 'i',
+      logout: 'Wyloguj',
       errors: {
         username: {
           required: 'Nazwa użytkownika jest wymagana',
@@ -87,7 +88,12 @@ export const pl = {
       messages: {
         sends: 'wysyła Ci:',
         empty: 'Brak wiadomości',
-      }
+      },
+      settings: {
+        backMain: 'Powrót do ekranu głównego',
+        toggleLightTheme: 'Włącz tryb jasny',
+        toggleDarkTheme: 'Włącz tryb ciemny',
+      },
     },
   }
 }

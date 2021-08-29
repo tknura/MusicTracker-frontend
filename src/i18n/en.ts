@@ -13,6 +13,7 @@ export const en = {
       friends: 'Friends',
       messages: 'Messages',
       and: 'and',
+      logout: 'Log out',
       errors: {
         username: {
           required: 'Username is required',
@@ -87,6 +88,12 @@ export const en = {
       messages: {
         sends: 'sends You:',
         empty: 'No messages',
+      },
+      settings: {
+        backMain: 'Back to main screen',
+        toggleLightTheme: 'Toggle light mode',
+        toggleDarkTheme: 'Toggle dark mode',
+
       }
     },
   },
