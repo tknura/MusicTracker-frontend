@@ -35,7 +35,7 @@ const InternalShare = ({
   const { data: friends } = useFriendsQuery({ userId: userId || -1 })
   const { mutate: sendMessage, isLoading, isSuccess, isError } = useAddMessageMutation({})
 
-  const [value, setValue] = useState(friends?.[0].friend_id.toString())
+  const [value, setValue] = useState(friends?.[0]?.friend_id.toString())
   const handleSendMessage = () => {
     if (userId && value) {
       sendMessage({

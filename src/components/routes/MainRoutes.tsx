@@ -1,3 +1,4 @@
+import { RestrictedRoute } from 'components/navigation/RestrictedRoute'
 import {
   LOGIN_ROUTE,
   CALLBACK_ROUTE,
@@ -28,18 +29,18 @@ const MainRoutes = (): JSX.Element => (
     <Route exact path={SOCIAL_REGISTER_ROUTE}>
       <SocialRegisterScreen />
     </Route>
-    <Route exact path={MAIN_ROUTE}>
+    <RestrictedRoute exact path={MAIN_ROUTE}>
       <MainScreen />
-    </Route>
-    <Route exact path={APP_CONNECTION_ROUTE}>
+    </RestrictedRoute>
+    <RestrictedRoute exact path={APP_CONNECTION_ROUTE}>
       <AppConnectionsScreen />
-    </Route>
-    <Route exact path={CALLBACK_ROUTE}>
+    </RestrictedRoute>
+    <RestrictedRoute exact path={CALLBACK_ROUTE}>
       <CallbackScreen />
-    </Route>
-    <Route exact path={FRIENDS_ROUTE}>
+    </RestrictedRoute>
+    <RestrictedRoute exact path={FRIENDS_ROUTE}>
       <FriendsScreen />
-    </Route>
+    </RestrictedRoute>
     <Redirect exact path="*" to={LOGIN_ROUTE} />
   </Switch>
 )

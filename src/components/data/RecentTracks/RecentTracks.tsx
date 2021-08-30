@@ -1,13 +1,13 @@
-import { Heading, Skeleton } from '@chakra-ui/react'
+import { Divider, Heading, Skeleton, Stack, StackProps } from '@chakra-ui/react'
 import { useTranslation } from 'react-i18next'
 import { useMemo } from 'react'
 
 import { useRecentlyPlayedTracks } from 'api/hooks/spotify/player/useRecentlyPlayedTracks'
 import { useCurrentlyPlaying } from 'api/hooks/spotify/player/useCurrentlyPlaying'
 import { RecentTrackArea } from 'components/data/RecentTracks/RecentTrackArea'
-import { TopArea, TopAreaProps } from 'components/ui/TopArea/TopArea'
+import { TopArea } from 'components/ui/TopArea/TopArea'
 
-const RecentTracks = (props: TopAreaProps): JSX.Element => {
+const RecentTracks = (props: StackProps): JSX.Element => {
   const { t } = useTranslation()
 
   const {
@@ -30,19 +30,23 @@ const RecentTracks = (props: TopAreaProps): JSX.Element => {
   ), [currentlyPlayingResponse])
 
   return (
-    <TopArea {...props}>
+    <Stack {...props}>
       <Heading fontSize="4xl">
         {t('screens.main.recentTracks')}
       </Heading>
+      <Divider my="2" />
       <Skeleton isLoaded={!isCurrentlyPlayingLoading}>
         {currentlyPlayingResponse?.is_playing && (
-          <RecentTrackArea
-            artist={currentTrack?.artists[0].name || ''}
-            track={currentTrack?.name || ''}
-            id={currentTrack?.id || ''}
-            time={new Date()}
-            isCurrent
-          />
+          <>
+            <RecentTrackArea
+              artist={currentTrack?.artists[0].name || ''}
+              track={currentTrack?.name || ''}
+              id={currentTrack?.id || ''}
+              time={new Date()}
+              isCurrent
+            />
+            <Divider my="2" />
+          </>
         )}
       </Skeleton>
       <Skeleton isLoaded={!isRecentlyPlayedLoading}>
@@ -60,7 +64,7 @@ const RecentTracks = (props: TopAreaProps): JSX.Element => {
           )}
         />
       </Skeleton>
-    </TopArea>
+    </Stack>
   )
 }
 
