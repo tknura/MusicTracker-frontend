@@ -5,7 +5,7 @@ import { Box, Button, Center, Divider } from '@chakra-ui/react'
 import { useRegisterMutation } from 'api/hooks/auth/mutations/useRegisterMutation'
 import { RegisterForm, RegisterFormFields } from 'components/forms/RegisterForm'
 import { RouteContainer } from 'components/navigation/RouteContainer'
-import { AppLogo } from 'components/common/AppLogo/AppLogo'
+import { AppLogo } from 'components/ui/AppLogo/AppLogo'
 import { LOGIN_ROUTE } from 'constants/routeNames'
 
 const RegisterScreen = (): JSX.Element => {
