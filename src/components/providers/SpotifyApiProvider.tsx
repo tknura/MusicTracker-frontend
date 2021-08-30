@@ -25,16 +25,26 @@ const useSpotifyApiHelper = () => {
   useEffect(() => {
     const refresh = async () => {
       setTokenRefreshing(true)
-      if (spotifyAccessToken) {
-        spotifyApi.setAccessToken(spotifyAccessToken)
-      } else if (userId) {
-        await refreshMutate({ userId, apiType: 'Spotify' })
+      try {
+        if (spotifyAccessToken) {
+          spotifyApi.setAccessToken(spotifyAccessToken)
+        } else if (userId) {
+          await refreshMutate({ userId, apiType: 'Spotify' })
+        }
+      } catch {
+        setTokenRefreshing(false)
       }
       setTokenRefreshing(false)
     }
 
     refresh()
   }, [refreshMutate, spotifyAccessToken, spotifyApi, userId])
+
+  useEffect(() => {
+    if (!userId && !spotifyAccessToken) {
+      spotifyApi.resetAccessToken()
+    }
+  }, [spotifyAccessToken, spotifyApi, userId])
 
   return { spotifyApi, redirectUri, isTokenRefreshing }
 }
