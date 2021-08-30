@@ -1,4 +1,4 @@
-import { Badge, Button, Flex, FlexProps, HStack, IconButton, Spacer, VStack } from '@chakra-ui/react'
+import { Badge, Button, FlexProps, HStack, IconButton, VStack, Wrap } from '@chakra-ui/react'
 import { useTranslation } from 'react-i18next'
 import { FaRegSun, FaUserFriends } from 'react-icons/fa'
 import { useHistory } from 'react-router'
@@ -18,15 +18,15 @@ const NavBar = (props: FlexProps): JSX.Element => {
   const { data: pendingFriends } = usePendingFriendsQuery({ userId: userId || -1 })
 
   return (
-    <Flex justify="flex-end" p={5} {...props}>
-      <HStack>
+    <Wrap minW="200px" justify="space-between" p={5} {...props}>
+      <HStack wrap="wrap" p="2">
         <Button
           leftIcon={<FaUserFriends />}
           onClick={() => history.push(FRIENDS_ROUTE)}
         >
           {`${t('common.friends')} ${t('common.and')} ${t('common.messages')}`}
         </Button>
-        <VStack align="flex-start">
+        <VStack align="flex-start" pt={[3, 0]}>
           <Badge colorScheme="primary" variant="outline">
             {`${messages?.length} ${t('common.messages')}`}
           </Badge>
@@ -35,8 +35,7 @@ const NavBar = (props: FlexProps): JSX.Element => {
           </Badge>
         </VStack>
       </HStack>
-      <Spacer />
-      <HStack>
+      <HStack px="2">
         <IconButton
           colorScheme="primary"
           aria-label="Search database"
@@ -47,7 +46,7 @@ const NavBar = (props: FlexProps): JSX.Element => {
           {t('common.logout')}
         </Button>
       </HStack>
-    </Flex>
+    </Wrap>
   )
 }
 
