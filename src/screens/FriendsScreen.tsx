@@ -1,4 +1,4 @@
-import { Box, BoxProps, Flex } from '@chakra-ui/react'
+import { BoxProps, Flex, Box } from '@chakra-ui/react'
 
 import { BackButton } from 'components/ui/BackButton'
 import { FriendsArea } from 'components/data/friends/FriendsArea'
@@ -9,9 +9,21 @@ const FriendsScreen = (props: BoxProps): JSX.Element => (
   <RouteContainer>
     <Box w="100%" h="97vh" p="5" {...props}>
       <BackButton />
-      <Flex w="100%" h="100%">
-        <FriendsArea w="50%" overflowY="auto" mt="5" mr="5" />
-        <MessagesArea w="50%" overflowY="auto" mt="5" ml="5" />
+      <Flex direction={['column', 'row']} w="100%" h="100%">
+        <FriendsArea
+          minW="300px"
+          w={['100%', '50%']}
+          overflowY={['unset', 'auto']}
+          mt="5"
+          mr={[0, 5]}
+        />
+        <MessagesArea
+          minW="300px"
+          w={['100%', '50%']}
+          overflowY={['unset', 'auto']}
+          mt="5"
+          ml={[0, 5]}
+        />
       </Flex>
     </Box>
   </RouteContainer>
