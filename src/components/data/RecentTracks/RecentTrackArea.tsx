@@ -26,15 +26,14 @@ const RecentTrackArea = ({
   ...props
 }: RecentTrackAreaProps): JSX.Element => {
   const { t, i18n } = useTranslation()
-  const timeDistance = i18n.language === 'pl' ? formatDistance(new Date(), time, { locale: pl }) : formatDistance(new Date(), time)
+  const timeDistance = i18n.language === 'pl'
+    ? formatDistance(new Date(), time, { locale: pl })
+    : formatDistance(new Date(), time)
 
   const { data: geniusData } = useSearch(`${artist} ${track}`)
   const { data } = useTrack(id)
 
-  let geniusPath = 'http://genius.com'
-  if (geniusData?.response.hits.length !== 0) {
-    geniusPath += geniusData?.response.hits[0].result.path
-  }
+  const geniusPath = geniusData?.response.hits[0].result.path
 
   return (
     <Stack
