@@ -1,6 +1,8 @@
-# MusicShare-frontend <!-- omit in toc -->
+# MusicTracker-frontend <!-- omit in toc -->
 
-Music share - music tracker using Spotify API application created using **React**, **React Query** and **TypeScript**.
+Deployed at: https://spotify-music-tracker.netlify.app/
+
+Music tracker - music tracker using Spotify API application created using **React**, **React Query** and **TypeScript**.
 
 If you have problems with the code in this repository, please file issues & bug reports [here](https://github.com/tknura/MusicShare-frontend/issues)!
 
