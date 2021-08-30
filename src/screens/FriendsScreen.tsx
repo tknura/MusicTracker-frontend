@@ -1,6 +1,6 @@
 import { Box, BoxProps, Flex } from '@chakra-ui/react'
 
-import { BackButton } from 'components/common/BackButton'
+import { BackButton } from 'components/ui/BackButton'
 import { FriendsArea } from 'components/data/friends/FriendsArea'
 import { MessagesArea } from 'components/data/MessagesArea/MessagesArea'
 import { RouteContainer } from 'components/navigation/RouteContainer'

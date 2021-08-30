@@ -12,7 +12,7 @@ interface RecentTrackActionsProps {
 const RecentTrackActions = ({
   trackId = '',
   trackUrl = '',
-  geniusPath
+  geniusPath = ''
 }: RecentTrackActionsProps) => (
   <HStack margin={['5px 0', '0 10px']}>
     <InternalShare trackId={trackId} />
@@ -22,9 +22,11 @@ const RecentTrackActions = ({
     <TwitterShareButton url={trackUrl}>
       <SiTwitter />
     </TwitterShareButton>
-    <Link href={geniusPath} target="blank">
-      <SiGenius />
-    </Link>
+    {!!geniusPath && (
+      <Link href={`http://genius.com${geniusPath}`} target="blank">
+        <SiGenius />
+      </Link>
+    )}
   </HStack>
 )
 
