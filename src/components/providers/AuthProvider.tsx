@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useQueryClient } from 'react-query'
 import constate from 'constate'
 
 import { USER_ID } from 'constants/localStorageKeys'
@@ -14,6 +15,8 @@ interface User {
 }
 
 const useAuthorization = () => {
+  const queryClient = useQueryClient()
+
   const [user, setUser] = useState<User | null>({
     userId: parseInt(localStorage.getItem(USER_ID) || '', 10)
   })
@@ -38,7 +41,9 @@ const useAuthorization = () => {
 
   const logout = () => {
     setUser(null)
-    localStorage.setItem(USER_ID, '')
+    setSpotifyData(null)
+    localStorage.removeItem(USER_ID)
+    queryClient.clear()
   }
 
   const authSpotify = (accessToken: string) => {

@@ -90,7 +90,7 @@ export const pl = {
         empty: 'Brak wiadomości',
       },
       settings: {
-        backMain: 'Powrót do ekranu głównego',
+        backMain: 'Przejdź do ekranu głównego',
         toggleLightTheme: 'Włącz tryb jasny',
         toggleDarkTheme: 'Włącz tryb ciemny',
       },

@@ -90,7 +90,7 @@ export const en = {
         empty: 'No messages',
       },
       settings: {
-        backMain: 'Back to main screen',
+        backMain: 'Go to main screen',
         toggleLightTheme: 'Toggle light mode',
         toggleDarkTheme: 'Toggle dark mode',
 

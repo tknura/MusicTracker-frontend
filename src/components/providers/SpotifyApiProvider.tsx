@@ -11,7 +11,7 @@ const useSpotifyApiHelper = () => {
   const userId = useUserId()
   const authSpotify = useAuthSpotify()
 
-  const [isTokenRefreshing, setTokenRefreshing] = useState<boolean>(false)
+  const [isTokenRefreshing, setTokenRefreshing] = useState<boolean>(true)
 
   const spotifyApi = useMemo(() => new SpotifyWebApi(), [])
   const redirectUri = `${(new URL(window.location.href)).origin}${CALLBACK_ROUTE}`
@@ -24,16 +24,16 @@ const useSpotifyApiHelper = () => {
 
   useEffect(() => {
     const refresh = async () => {
+      setTokenRefreshing(true)
       if (spotifyAccessToken) {
         spotifyApi.setAccessToken(spotifyAccessToken)
       } else if (userId) {
         await refreshMutate({ userId, apiType: 'Spotify' })
       }
+      setTokenRefreshing(false)
     }
 
-    setTokenRefreshing(true)
     refresh()
-    setTokenRefreshing(false)
   }, [refreshMutate, spotifyAccessToken, spotifyApi, userId])
 
   return { spotifyApi, redirectUri, isTokenRefreshing }

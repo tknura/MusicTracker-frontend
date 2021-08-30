@@ -55,7 +55,7 @@ const AppConnectionsScreen = (): JSX.Element => {
             ? t('screens.settings.toggleDarkTheme')
             : t('screens.settings.toggleLightTheme')}
         </Button>
-        <Button onClick={handleRedirect}>
+        <Button colorScheme="primary" onClick={handleRedirect}>
           {spotifyApiToken ? t('screens.settings.backMain') : t('common.logout')}
         </Button>
       </Stack>
