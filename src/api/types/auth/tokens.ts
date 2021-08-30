@@ -16,3 +16,13 @@ export interface SaveFbTokensValues {
 export interface SaveFbTokensResponse {
   accessToken: string
 }
+
+export interface SaveGoogleTokensValues {
+  userId: number
+  googleUserId: string
+  accessToken: string
+}
+
+export interface SaveGoogleTokensResponse {
+  accessToken: string
+}

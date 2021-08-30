@@ -14,3 +14,9 @@ export interface FbLoginValues {
   fbUserID: string
   accessToken: string
 }
+
+export interface GoogleLoginValues {
+  email: string
+  googleUserID: string
+  accessToken: string
+}
