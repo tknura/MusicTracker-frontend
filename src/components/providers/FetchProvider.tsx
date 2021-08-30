@@ -13,9 +13,15 @@ const useFetchHelper = () => {
   return { fetch }
 }
 
-const [FetchProvider, useFetch] = constate(
+const [
+  FetchProvider,
+  useFetch,
+] = constate(
   useFetchHelper,
   value => ({ fetch: value.fetch }),
 )
 
-export { FetchProvider, useFetch }
+export {
+  FetchProvider,
+  useFetch,
+}

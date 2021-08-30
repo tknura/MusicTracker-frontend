@@ -14,6 +14,6 @@ export const registerSchema = yup.object().shape({
     .min(8, 'common.errors.password.toShort'),
   repeatPassword: yup
     .string()
-    .required('screens.register.errors.repeatPassword.required')
-    .oneOf([yup.ref('password'), ''], 'screens.register.errors.repeatPassword.notMatch'),
+    .required('common.errors.repeatPassword.required')
+    .oneOf([yup.ref('password'), ''], 'common.errors.repeatPassword.notMatch'),
 })

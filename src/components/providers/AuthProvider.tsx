@@ -1,30 +1,64 @@
 import { useState } from 'react'
+import { useQueryClient } from 'react-query'
 import constate from 'constate'
 
-import { Id } from 'types/Id'
+import { USER_ID } from 'constants/localStorageKeys'
+import { useRefreshTokensMutation } from 'api/hooks/auth/mutations/useRefreshTokensMutation'
 
 interface SpotifyUserData {
   accessToken: string
-  refreshToken: string
+  refreshToken?: string
 }
 
 interface User {
-  userId: Id
-  spotify?: SpotifyUserData
+  userId: number
 }
 
 const useAuthorization = () => {
-  const [user, setUser] = useState<User | null>(null)
+  const queryClient = useQueryClient()
 
-  const login = (userId: Id) => {
+  const [user, setUser] = useState<User | null>({
+    userId: parseInt(localStorage.getItem(USER_ID) || '', 10)
+  })
+  const [spotifyData, setSpotifyData] = useState<SpotifyUserData | null>(null)
+
+  const { mutateAsync: refreshMutate } = useRefreshTokensMutation({})
+
+  const login = async (userId: number) => {
     setUser({
       userId,
     })
+    localStorage.setItem(USER_ID, userId.toString())
+
+    try {
+      const { access_token: newAccessToken } = await refreshMutate({ apiType: 'Spotify', userId })
+      authSpotify(newAccessToken)
+      return { isSpotifyConnected: true }
+    } catch {
+      return ({ isSpotifyConnected: false })
+    }
   }
 
-  const logout = () => setUser(null)
+  const logout = () => {
+    setUser(null)
+    setSpotifyData(null)
+    localStorage.removeItem(USER_ID)
+    queryClient.clear()
+  }
 
-  return { login, logout, user }
+  const authSpotify = (accessToken: string) => {
+    setSpotifyData({
+      accessToken,
+    })
+  }
+
+  return {
+    login,
+    logout,
+    user,
+    authSpotify,
+    spotifyData
+  }
 }
 
 const [
@@ -33,12 +67,16 @@ const [
   useLogout,
   useUserLoggedIn,
   useUserId,
+  useAuthSpotify,
+  useSpotifyToken,
 ] = constate(
   useAuthorization,
   value => value.login,
   value => value.logout,
   value => !!value.user?.userId,
-  value => value.user?.userId
+  value => value.user?.userId,
+  value => value.authSpotify,
+  value => value.spotifyData?.accessToken
 )
 
 export {
@@ -47,4 +85,6 @@ export {
   useLogout,
   useUserLoggedIn,
   useUserId,
+  useAuthSpotify,
+  useSpotifyToken,
 }
