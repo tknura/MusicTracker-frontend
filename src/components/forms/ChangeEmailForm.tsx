@@ -1,11 +1,7 @@
 import { FormikHelpers, useFormik } from 'formik'
 import { useTranslation } from 'react-i18next'
-import {
-  Flex,
-  Button,
-} from '@chakra-ui/react'
+import { Button } from '@chakra-ui/react'
 
-import { isInterfaceDeclaration } from 'typescript'
 import { TextField } from 'components/ui/TextField'
 import { changeEmailSchema } from 'schemas/changeEmailFormSchema'
 import * as Styled from './form.styles'

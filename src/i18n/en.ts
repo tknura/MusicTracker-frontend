@@ -95,7 +95,8 @@ export const en = {
         toggleDarkTheme: 'Toggle dark mode',
         changeUserData: 'Submit changes',
         oldPassword: 'Old password',
-        newPassword: 'New password'
+        newPassword: 'New password',
+        info: 'Your account must be linked to your Spotify account to use the system!',
       }
     },
   },

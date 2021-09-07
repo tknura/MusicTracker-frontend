@@ -95,7 +95,8 @@ export const pl = {
         toggleDarkTheme: 'Włącz tryb ciemny',
         changeUserData: 'Wprowadź zmiany',
         oldPassword: 'Stare hasło',
-        newPassword: 'Nowe hasło'
+        newPassword: 'Nowe hasło',
+        info: 'Aby móc korzystać z systemu konto musi być połączone z kontem spotify!',
       },
     },
   }

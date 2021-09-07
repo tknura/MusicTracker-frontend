@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import { useHistory } from 'react-router-dom'
-import { Button, Link, Select, Stack, useColorMode, VStack } from '@chakra-ui/react'
+import { Button, Link, Select, Stack, useColorMode, VStack, Text } from '@chakra-ui/react'
 import SpotifyWebApi from 'spotify-web-api-node'
 
 import { ChangeEmailForm, ChangeEmlFormFields } from 'components/forms/ChangeEmailForm'
@@ -77,8 +77,11 @@ const AppConnectionsScreen = (): JSX.Element => {
       justifyContent="center"
     >
       <Stack w="300px" spacing="5">
-        <ChangeEmailForm onSubmit={handleChangeEmailSubmit} />
-        <ChangePasswordForm onSubmit={handleChangePasswordSubmit} />
+        {!spotifyApiToken && (
+          <Text>
+            {t('screens.settings.info')}
+          </Text>
+        )}
         <Link href={authorizeUrl}>
           <Button
             mr={20}
@@ -90,6 +93,12 @@ const AppConnectionsScreen = (): JSX.Element => {
             {spotifyApiToken ? t('common.connectedSpotify') : t('common.loginSpotify') }
           </Button>
         </Link>
+        {spotifyApiToken && (
+          <>
+            <ChangeEmailForm onSubmit={handleChangeEmailSubmit} />
+            <ChangePasswordForm onSubmit={handleChangePasswordSubmit} />
+          </>
+        )}
         <Select
           value={i18n.language}
           onChange={(event) => i18n.changeLanguage(event.currentTarget.value)}
