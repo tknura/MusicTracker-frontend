@@ -93,6 +93,9 @@ export const pl = {
         backMain: 'Przejdź do ekranu głównego',
         toggleLightTheme: 'Włącz tryb jasny',
         toggleDarkTheme: 'Włącz tryb ciemny',
+        changeUserData: 'Wprowadź zmiany',
+        oldPassword: 'Stare hasło',
+        newPassword: 'Nowe hasło'
       },
     },
   }
