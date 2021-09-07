@@ -9,6 +9,7 @@ import { useRegisterMutation } from 'api/hooks/auth/mutations/useRegisterMutatio
 import { useLogin } from 'components/providers/AuthProvider'
 import { useFbLoginMutation } from 'api/hooks/auth/mutations/useFbLoginMutation'
 import { FbLoginValues } from 'api/types/auth/login'
+import { MAIN_ROUTE } from 'constants/routeNames'
 
 const SocialRegisterScreen = () => {
   const { t } = useTranslation()
@@ -17,7 +18,10 @@ const SocialRegisterScreen = () => {
   const fbLoginData = history.location.state as FbLoginValues
 
   const { mutate: fbLoginMutate, isLoading: isFbLoginLoading } = useFbLoginMutation({
-    onSuccess: ({ user_id: newUserId }) => login(newUserId),
+    onSuccess: ({ user_id: newUserId }) => {
+      login(newUserId)
+      history.push(MAIN_ROUTE)
+    },
   })
 
   const { mutate: registerMutate, isLoading } = useRegisterMutation({
