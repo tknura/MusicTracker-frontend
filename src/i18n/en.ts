@@ -93,7 +93,9 @@ export const en = {
         backMain: 'Go to main screen',
         toggleLightTheme: 'Toggle light mode',
         toggleDarkTheme: 'Toggle dark mode',
-
+        changeUserData: 'Submit changes',
+        oldPassword: 'Old password',
+        newPassword: 'New password'
       }
     },
   },
